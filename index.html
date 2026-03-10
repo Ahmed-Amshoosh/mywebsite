@@ -1439,735 +1439,98 @@
 </section>
 
 <!-- Services Section -->
-<!-- ========================================
-     SERVICES SECTION - NEW SCROLL EFFECT
-     ======================================== -->
-<section class="services-toggle" id="services">
-    <!-- خلفية متحركة -->
-    <div class="services-bg-glow"></div>
-    <div class="services-particles" id="servicesParticles"></div>
-
-    <!-- مؤشر التقدم الجانبي -->
-    <div class="services-progress-indicator">
-        <div class="progress-dot active" data-card="1"></div>
-        <div class="progress-dot" data-card="2"></div>
-        <div class="progress-dot" data-card="3"></div>
-        <div class="progress-dot" data-card="4"></div>
-        <div class="progress-dot" data-card="5"></div>
-        <div class="progress-dot" data-card="6"></div>
-    </div>
-
+<section class="services" id="services">
     <div class="container">
-        <!-- عنوان القسم - ثابت -->
-        <div class="section-header-sticky">
-            <span class="section-tag animate-fade">🚀 خدماتنا</span>
-            <h2 class="section-title animate-fade">حلول تقنية متكاملة</h2>
-            <p class="section-subtitle animate-fade">كل ما تحتاجه لنمو مشروعك الرقمي في مكان واحد</p>
-            <div class="scroll-indicator">
-                <i class="fas fa-mouse"></i>
-                <span>مرر للأسفل لاستكشاف الخدمات</span>
-            </div>
+        <div class="section-header">
+            <span class="section-tag fade-up">🚀 خدماتنا</span>
+            <h2 class="section-title fade-up">حلول تقنية متكاملة</h2>
+            <p class="section-subtitle fade-up">كل ما تحتاجه لنمو مشروعك الرقمي في مكان واحد</p>
         </div>
-
-        <!-- حاوية البطاقات -->
-        <div class="cards-stack-container">
-            <!-- بطاقة 1 -->
-            <div class="service-card-stack active" data-card="1">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">01</div>
-                <div class="card-icon-wrapper">
-                    <i class="fas fa-code"></i>
+        <div class="row g-4">
+            <!-- Service 1 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fas fa-code"></i></div>
+                    <h3 class="service-title">تطوير أنظمة Laravel</h3>
+                    <ul class="service-list">
+                        <li>أنظمة مخصصة حسب الطلب</li>
+                        <li>لوحات تحكم متقدمة</li>
+                        <li>أنظمة حجز وإدارة</li>
+                        <li>تكامل API وبوابات دفع</li>
+                    </ul>
                 </div>
-                <h3 class="card-title">تطوير أنظمة Laravel</h3>
-                <p class="card-description">بناء أنظمة مخصصة قابلة للتوسع باستخدام أحدث إصدارات Laravel مع معايير أمان صارمة وأداء عالي.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> أنظمة مخصصة حسب الطلب</li>
-                    <li><span class="check-icon">✓</span> لوحات تحكم متقدمة</li>
-                    <li><span class="check-icon">✓</span> أنظمة حجز وإدارة</li>
-                    <li><span class="check-icon">✓</span> تكامل API وبوابات دفع</li>
-                </ul>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
-
-            <!-- بطاقة 2 -->
-            <div class="service-card-stack" data-card="2">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">02</div>
-                <div class="card-icon-wrapper">
-                    <i class="fab fa-wordpress"></i>
+            <!-- Service 2 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fab fa-wordpress"></i></div>
+                    <h3 class="service-title">مواقع WordPress</h3>
+                    <ul class="service-list">
+                        <li>مواقع تعريفية وشركات</li>
+                        <li>تخصيص قوالب وإضافات</li>
+                        <li>تحسين سرعة وأداء</li>
+                        <li>حماية وتحسين SEO</li>
+                    </ul>
+                    <div class="service-note">💡 مناسب للشركات الصغيرة والمتوسطة</div>
                 </div>
-                <h3 class="card-title">مواقع WordPress</h3>
-                <p class="card-description">مواقع احترافية وسريعة مع تحسين SEO وإضافات مخصصة تناسب جميع المجالات التجارية.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> مواقع تعريفية وشركات</li>
-                    <li><span class="check-icon">✓</span> تخصيص قوالب وإضافات</li>
-                    <li><span class="check-icon">✓</span> تحسين سرعة وأداء</li>
-                    <li><span class="check-icon">✓</span> حماية وتحسين SEO</li>
-                </ul>
-                <div class="service-badge">💡 مثالي للشركات الناشئة</div>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
-
-            <!-- بطاقة 3 -->
-            <div class="service-card-stack" data-card="3">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">03</div>
-                <div class="card-icon-wrapper">
-                    <i class="fas fa-envelope"></i>
+            <!-- Service 3 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fas fa-envelope"></i></div>
+                    <h3 class="service-title">إيميلات احترافية</h3>
+                    <ul class="service-list">
+                        <li>بريد رسمي باسم النطاق</li>
+                        <li>ربط مع Gmail/Outlook</li>
+                        <li>إعداد SPF/DKIM/DMARC</li>
+                        <li>حل مشاكل السبام</li>
+                    </ul>
+                    <div class="service-note">💡 لكل مشروع محترف بريد رسمي</div>
                 </div>
-                <h3 class="card-title">إيميلات احترافية</h3>
-                <p class="card-description">بريد رسمي باسم النطاق مع ضمان وصول الرسائل وإعدادات متقدمة للحماية من السبام.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> بريد رسمي باسم النطاق</li>
-                    <li><span class="check-icon">✓</span> ربط مع Gmail/Outlook</li>
-                    <li><span class="check-icon">✓</span> إعداد SPF/DKIM/DMARC</li>
-                    <li><span class="check-icon">✓</span> حل مشاكل السبام</li>
-                </ul>
-                <div class="service-badge">💡 أساس لكل عمل محترف</div>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
-
-            <!-- بطاقة 4 -->
-            <div class="service-card-stack" data-card="4">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">04</div>
-                <div class="card-icon-wrapper">
-                    <i class="fas fa-shopping-cart"></i>
+            <!-- Service 4 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fas fa-shopping-cart"></i></div>
+                    <h3 class="service-title">متاجر إلكترونية</h3>
+                    <ul class="service-list">
+                        <li>إنشاء متجر احترافي</li>
+                        <li>تخصيص تجربة الشراء</li>
+                        <li>بوابات دفع وشحن</li>
+                        <li>إدارة المنتجات والمخزون</li>
+                    </ul>
                 </div>
-                <h3 class="card-title">متاجر إلكترونية</h3>
-                <p class="card-description">متاجر متكاملة مع تجربة شراء سلسة، بوابات شحن متعددة، ونظام إدارة مخزون متقدم.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> إنشاء متجر احترافي</li>
-                    <li><span class="check-icon">✓</span> تخصيص تجربة الشراء</li>
-                    <li><span class="check-icon">✓</span> بوابات دفع وشحن</li>
-                    <li><span class="check-icon">✓</span> إدارة المنتجات والمخزون</li>
-                </ul>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
-
-            <!-- بطاقة 5 -->
-            <div class="service-card-stack" data-card="5">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">05</div>
-                <div class="card-icon-wrapper">
-                    <i class="fas fa-tools"></i>
+            <!-- Service 5 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fas fa-tools"></i></div>
+                    <h3 class="service-title">تحسين مواقع قائمة</h3>
+                    <ul class="service-list">
+                        <li>إعادة تصميم واجهات</li>
+                        <li>تحسين تجربة المستخدم</li>
+                        <li>تسريع الموقع</li>
+                        <li>إصلاح أخطاء برمجية</li>
+                    </ul>
                 </div>
-                <h3 class="card-title">تحسين مواقع قائمة</h3>
-                <p class="card-description">إعادة هيكلة المواقع القائمة، تحسين سرعة الأداء، تجربة مستخدم، وإصلاح الثغرات الأمنية.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> إعادة تصميم واجهات</li>
-                    <li><span class="check-icon">✓</span> تحسين تجربة المستخدم</li>
-                    <li><span class="check-icon">✓</span> تسريع الموقع</li>
-                    <li><span class="check-icon">✓</span> إصلاح أخطاء برمجية</li>
-                </ul>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
-
-            <!-- بطاقة 6 -->
-            <div class="service-card-stack" data-card="6">
-                <div class="card-glow-effect"></div>
-                <div class="card-number-bg">06</div>
-                <div class="card-icon-wrapper">
-                    <i class="fas fa-shield-alt"></i>
+            <!-- Service 6 -->
+            <div class="col-lg-4 col-md-6">
+                <div class="service-card fade-up">
+                    <div class="service-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3 class="service-title">حماية وتأمين</h3>
+                    <ul class="service-list">
+                        <li>حماية من الاختراق</li>
+                        <li>نسخ احتياطي تلقائي</li>
+                        <li>مراقبة الأداء</li>
+                        <li>تحديثات دورية</li>
+                    </ul>
                 </div>
-                <h3 class="card-title">حماية وتأمين</h3>
-                <p class="card-description">حماية شاملة لموقعك من الاختراقات مع نسخ احتياطي تلقائي ومراقبة مستمرة للأداء.</p>
-                <ul class="card-features">
-                    <li><span class="check-icon">✓</span> حماية من الاختراق</li>
-                    <li><span class="check-icon">✓</span> نسخ احتياطي تلقائي</li>
-                    <li><span class="check-icon">✓</span> مراقبة الأداء</li>
-                    <li><span class="check-icon">✓</span> تحديثات دورية</li>
-                </ul>
-                <a href="#" class="card-cta-btn">
-                    <span>استكشف الخدمة</span>
-                    <i class="fas fa-arrow-left"></i>
-                </a>
             </div>
         </div>
     </div>
 </section>
 
-<style>
-    /* ========================================
-       SERVICES TOGGLE SECTION STYLES
-       ======================================== */
-    .services-toggle {
-        padding: 6rem 0 10rem;
-        background: var(--bg);
-        position: relative;
-        overflow: visible;
-        min-height: 100vh;
-    }
-
-    .services-bg-glow {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 900px;
-        height: 900px;
-        background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 60%);
-        z-index: 0;
-        pointer-events: none;
-        filter: blur(100px);
-        animation: glowPulse 8s ease-in-out infinite;
-    }
-
-    @keyframes glowPulse {
-        0%, 100% { opacity: 0.5; transform: translate(-50%, -50%) scale(1); }
-        50% { opacity: 0.8; transform: translate(-50%, -50%) scale(1.1); }
-    }
-
-    .services-particles {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .particle {
-        position: absolute;
-        width: 4px;
-        height: 4px;
-        background: var(--primary);
-        border-radius: 50%;
-        opacity: 0.3;
-        animation: particleFloat 15s linear infinite;
-    }
-
-    @keyframes particleFloat {
-        0% { transform: translateY(0) translateX(0); opacity: 0; }
-        10% { opacity: 0.3; }
-        90% { opacity: 0.3; }
-        100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
-    }
-
-    /* Progress Indicator */
-    .services-progress-indicator {
-        position: fixed;
-        right: 40px;
-        top: 50%;
-        transform: translateY(-50%);
-        display: flex;
-        flex-direction: column;
-        gap: 15px;
-        z-index: 100;
-    }
-
-    @media (max-width: 992px) {
-        .services-progress-indicator { display: none; }
-    }
-
-    .progress-dot {
-        width: 12px;
-        height: 12px;
-        border-radius: 50%;
-        background: var(--border);
-        border: 2px solid var(--primary);
-        cursor: pointer;
-        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-    }
-
-    .progress-dot::before {
-        content: '';
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 100%;
-        height: 100%;
-        border-radius: 50%;
-        background: var(--primary);
-        opacity: 0;
-        transition: all 0.3s;
-    }
-
-    .progress-dot.active {
-        background: var(--primary);
-        box-shadow: 0 0 20px var(--primary);
-        transform: scale(1.3);
-    }
-
-    .progress-dot.active::before {
-        opacity: 0.5;
-        animation: dotPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes dotPulse {
-        0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.5; }
-        50% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-    }
-
-    /* Sticky Section Header */
-    .section-header-sticky {
-        text-align: center;
-        margin-bottom: 4rem;
-        position: sticky;
-        top: 120px;
-        z-index: 50;
-        background: var(--bg);
-        padding: 2rem 0;
-        transition: all 0.3s;
-    }
-
-    .section-header-sticky .section-tag {
-        display: inline-block;
-        background: rgba(59,130,246,0.15);
-        color: var(--primary);
-        padding: 0.6rem 2rem;
-        border-radius: 50px;
-        font-weight: 700;
-        border: 1px solid rgba(59,130,246,0.3);
-        margin-bottom: 1rem;
-        backdrop-filter: blur(10px);
-    }
-
-    .section-header-sticky .section-title {
-        font-size: 3.5rem;
-        font-weight: 900;
-        margin-bottom: 1rem;
-        background: var(--gradient-1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-    }
-
-    .section-header-sticky .section-subtitle {
-        color: var(--text-muted);
-        font-size: 1.2rem;
-        max-width: 600px;
-        margin: 0 auto 1.5rem;
-        line-height: 1.8;
-    }
-
-    .scroll-indicator {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        gap: 0.8rem;
-        color: var(--text-muted);
-        font-size: 0.95rem;
-        animation: bounceIndicator 2s ease-in-out infinite;
-    }
-
-    .scroll-indicator i {
-        color: var(--primary);
-        font-size: 1.2rem;
-    }
-
-    @keyframes bounceIndicator {
-        0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
-    }
-
-    /* Cards Stack Container */
-    .cards-stack-container {
-        position: relative;
-        max-width: 950px;
-        margin: 0 auto;
-        height: 600px;
-        perspective: 1500px;
-    }
-
-    /* Service Card Stack */
-    .service-card-stack {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%) scale(0.9);
-        width: 100%;
-        background: var(--card-bg);
-        backdrop-filter: blur(20px);
-        border: 1px solid var(--border);
-        border-radius: 35px;
-        padding: 3.5rem;
-        box-shadow:
-                0 30px 60px -20px rgba(0,0,0,0.8),
-                0 0 0 1px rgba(255,255,255,0.05);
-        opacity: 0;
-        visibility: hidden;
-        transition: all 0.7s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        overflow: hidden;
-    }
-
-    .service-card-stack.active {
-        opacity: 1;
-        visibility: visible;
-        transform: translateX(-50%) scale(1);
-        z-index: 10;
-    }
-
-    .service-card-stack.prev {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(-50%) scale(0.95) translateY(-40px);
-        z-index: 5;
-    }
-
-    .service-card-stack.next {
-        opacity: 0;
-        visibility: hidden;
-        transform: translateX(-50%) scale(0.95) translateY(40px);
-        z-index: 5;
-    }
-
-    /* Card Glow Effect */
-    .card-glow-effect {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: radial-gradient(circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
-        rgba(59,130,246,0.12), transparent 50%);
-        opacity: 0;
-        transition: opacity 0.4s;
-        pointer-events: none;
-        z-index: 1;
-    }
-
-    .service-card-stack:hover .card-glow-effect {
-        opacity: 1;
-    }
-
-    /* Card Number Background */
-    .card-number-bg {
-        position: absolute;
-        top: 20px;
-        left: 35px;
-        font-size: 7rem;
-        font-weight: 900;
-        background: var(--gradient-1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        opacity: 0.06;
-        line-height: 1;
-        z-index: 0;
-    }
-
-    /* Card Icon */
-    .card-icon-wrapper {
-        width: 110px;
-        height: 110px;
-        background: var(--gradient-1);
-        border-radius: 30px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 3.2rem;
-        color: white;
-        margin-bottom: 2rem;
-        box-shadow: 0 20px 40px -15px rgba(59,130,246,0.6);
-        transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        position: relative;
-        z-index: 2;
-    }
-
-    .service-card-stack:hover .card-icon-wrapper {
-        transform: scale(1.12) rotate(-8deg);
-        box-shadow: 0 30px 50px -15px rgba(59,130,246,0.8);
-    }
-
-    /* Card Title */
-    .card-title {
-        font-size: 2.3rem;
-        font-weight: 800;
-        margin-bottom: 1.2rem;
-        background: var(--gradient-1);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Card Description */
-    .card-description {
-        font-size: 1.15rem;
-        color: var(--text-muted);
-        margin-bottom: 2.2rem;
-        line-height: 1.9;
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Card Features */
-    .card-features {
-        list-style: none;
-        padding: 0;
-        margin: 0 0 2.5rem;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 1rem;
-        position: relative;
-        z-index: 2;
-    }
-
-    .card-features li {
-        display: flex;
-        align-items: center;
-        gap: 0.9rem;
-        color: var(--text);
-        font-size: 0.98rem;
-        opacity: 0;
-        transform: translateX(-15px);
-        transition: all 0.4s ease;
-    }
-
-    .service-card-stack.active .card-features li {
-        opacity: 1;
-        transform: translateX(0);
-    }
-
-    .service-card-stack.active .card-features li:nth-child(1) { transition-delay: 0.1s; }
-    .service-card-stack.active .card-features li:nth-child(2) { transition-delay: 0.2s; }
-    .service-card-stack.active .card-features li:nth-child(3) { transition-delay: 0.3s; }
-    .service-card-stack.active .card-features li:nth-child(4) { transition-delay: 0.4s; }
-
-    .check-icon {
-        width: 26px;
-        height: 26px;
-        background: rgba(59,130,246,0.15);
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--primary);
-        font-weight: 700;
-        font-size: 0.85rem;
-        flex-shrink: 0;
-    }
-
-    /* Service Badge */
-    .service-badge {
-        background: rgba(59,130,246,0.1);
-        border-radius: 14px;
-        padding: 1rem 1.8rem;
-        font-size: 0.95rem;
-        color: var(--primary);
-        border-right: 3px solid var(--primary);
-        display: inline-block;
-        margin-bottom: 2rem;
-        position: relative;
-        z-index: 2;
-    }
-
-    /* Card CTA Button */
-    .card-cta-btn {
-        color: var(--primary);
-        text-decoration: none;
-        font-weight: 700;
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-        font-size: 1.15rem;
-        transition: all 0.3s ease;
-        padding: 1.2rem 2.5rem;
-        background: rgba(59,130,246,0.1);
-        border-radius: 50px;
-        border: 2px solid transparent;
-        position: relative;
-        z-index: 2;
-    }
-
-    .card-cta-btn:hover {
-        gap: 1.5rem;
-        background: rgba(59,130,246,0.15);
-        border-color: var(--primary);
-        box-shadow: 0 10px 30px -10px rgba(59,130,246,0.5);
-    }
-
-    .card-cta-btn i {
-        transition: transform 0.3s;
-    }
-
-    .card-cta-btn:hover i {
-        transform: translateX(-5px);
-    }
-
-    /* Responsive */
-    @media (max-width: 992px) {
-        .section-header-sticky { top: 80px; }
-        .section-header-sticky .section-title { font-size: 2.5rem; }
-        .cards-stack-container { height: 650px; }
-        .service-card-stack { padding: 2.5rem; }
-    }
-
-    @media (max-width: 768px) {
-        .services-toggle { padding: 3rem 0 6rem; }
-        .section-header-sticky {
-            position: relative;
-            top: 0;
-            margin-bottom: 2.5rem;
-            padding: 1.5rem 0;
-        }
-        .section-header-sticky .section-title { font-size: 2rem; }
-        .section-header-sticky .section-subtitle { font-size: 1rem; }
-        .scroll-indicator { display: none; }
-        .cards-stack-container {
-            height: auto;
-            position: relative;
-            min-height: 500px;
-        }
-        .service-card-stack {
-            position: relative;
-            transform: none !important;
-            left: 0;
-            margin-bottom: 2rem;
-            padding: 2rem;
-        }
-        .service-card-stack:not(.active) { display: none; }
-        .card-features { grid-template-columns: 1fr; }
-        .card-title { font-size: 1.8rem; }
-        .card-icon-wrapper { width: 85px; height: 85px; font-size: 2.5rem; }
-        .card-number-bg { font-size: 5rem; }
-    }
-
-    @media (max-width: 480px) {
-        .section-header-sticky .section-title { font-size: 1.7rem; }
-        .service-card-stack { padding: 1.5rem; }
-        .card-title { font-size: 1.5rem; }
-        .card-features li { font-size: 0.9rem; }
-    }
-
-    /* Animation Classes */
-    .animate-fade {
-        opacity: 0;
-        transform: translateY(30px);
-        transition: all 0.8s ease;
-    }
-
-    .animate-fade.active {
-        opacity: 1;
-        transform: translateY(0);
-    }
-</style>
-
-<script>
-    // ========================================
-    // SERVICES TOGGLE SECTION ANIMATION
-    // ========================================
-    (function() {
-        const serviceCards = document.querySelectorAll('.service-card-stack');
-        const progressDots = document.querySelectorAll('.progress-dot');
-
-        if (serviceCards.length === 0) return;
-
-        // Initialize first card
-        serviceCards[0].classList.add('active');
-        if (progressDots.length > 0) progressDots[0].classList.add('active');
-
-        // Animate section header
-        const headerElements = document.querySelectorAll('.section-header-sticky .animate-fade');
-        headerElements.forEach((el, index) => {
-            setTimeout(() => {
-                el.classList.add('active');
-            }, index * 150);
-        });
-
-        // Create particles
-        const particlesContainer = document.getElementById('servicesParticles');
-        if (particlesContainer) {
-            for (let i = 0; i < 25; i++) {
-                const particle = document.createElement('div');
-                particle.classList.add('particle');
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDuration = (12 + Math.random() * 18) + 's';
-                particle.style.animationDelay = (Math.random() * 10) + 's';
-                particle.style.width = (3 + Math.random() * 5) + 'px';
-                particle.style.height = particle.style.width;
-                particlesContainer.appendChild(particle);
-            }
-        }
-
-        // ScrollTrigger for card toggling
-        if (typeof ScrollTrigger !== 'undefined') {
-            ScrollTrigger.create({
-                trigger: '.services-toggle',
-                start: 'top center',
-                end: 'bottom center',
-                scrub: 0.5,
-                onUpdate: (self) => {
-                    const progress = self.progress;
-                    const totalCards = serviceCards.length;
-                    const cardIndex = Math.min(
-                        Math.floor(progress * totalCards),
-                        totalCards - 1
-                    );
-
-                    // Update cards
-                    serviceCards.forEach((card, index) => {
-                        card.classList.remove('active', 'prev', 'next');
-
-                        if (index === cardIndex) {
-                            card.classList.add('active');
-                        } else if (index < cardIndex) {
-                            card.classList.add('prev');
-                        } else {
-                            card.classList.add('next');
-                        }
-                    });
-
-                    // Update dots
-                    progressDots.forEach((dot, index) => {
-                        dot.classList.toggle('active', index === cardIndex);
-                    });
-                }
-            });
-        }
-
-        // Click on dots to navigate
-        progressDots.forEach((dot, index) => {
-            dot.addEventListener('click', () => {
-                if (typeof lenis !== 'undefined') {
-                    const section = document.querySelector('.services-toggle');
-                    const cardHeight = section.offsetHeight / serviceCards.length;
-                    const scrollPosition = section.offsetTop + (cardHeight * index);
-                    lenis.scrollTo(scrollPosition, { duration: 1.5 });
-                }
-            });
-        });
-
-        // Mouse Glow Effect
-        serviceCards.forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.setProperty('--mouse-x', x + 'px');
-                card.style.setProperty('--mouse-y', y + 'px');
-            });
-        });
-
-        // Refresh on resize
-        window.addEventListener('resize', () => {
-            if (typeof ScrollTrigger !== 'undefined') {
-                ScrollTrigger.refresh();
-            }
-        });
-    })();
-</script>
 <!-- Why Us Section -->
 <section class="why-us" id="why-us">
     <div class="container">
