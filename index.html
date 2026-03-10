@@ -463,44 +463,262 @@
         .why-title { font-size: 1.3rem; font-weight: 700; margin-bottom: 0.5rem; }
         .why-text { color: var(--text-muted); font-size: 0.95rem; }
 
-        /* Portfolio Section */
-        .portfolio { padding: 120px 0; background: var(--bg); }
-        .portfolio-filters { display: flex; justify-content: center; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+        /* ================================
+           قسم المشاريع الجديد (مع تأثير التمرير البطيء)
+           ================================ */
+        .portfolio {
+            padding: 120px 0;
+            background: var(--bg);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .portfolio-bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, rgba(59,130,246,0.1) 0%, transparent 60%);
+            z-index: 0;
+            pointer-events: none;
+            filter: blur(100px);
+        }
+
+        .portfolio .container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .portfolio-filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
         .portfolio-filter {
-            padding: 0.75rem 2rem; border-radius: 50px;
-            border: 2px solid var(--border); background: transparent;
-            color: var(--text); font-weight: 600; cursor: pointer; transition: all 0.3s ease;
+            padding: 0.75rem 2rem;
+            border-radius: 50px;
+            border: 2px solid var(--border);
+            background: transparent;
+            color: var(--text);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Cairo', sans-serif;
         }
-        .portfolio-filter.active, .portfolio-filter:hover {
-            background: var(--gradient-1); border-color: transparent; color: white;
+
+        .portfolio-filter.active,
+        .portfolio-filter:hover {
+            background: var(--gradient-1);
+            border-color: transparent;
+            color: white;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px -10px rgba(59,130,246,0.5);
         }
-        .portfolio-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
-        .portfolio-item {
-            position: relative; border-radius: 24px;
-            overflow: hidden; aspect-ratio: 4/3; cursor: pointer;
+
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
         }
+
+        .portfolio-card {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            cursor: pointer;
+        }
+
+        .portfolio-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 30px 60px -20px rgba(59,130,246,0.4);
+        }
+
+        .portfolio-image-container {
+            position: relative;
+            width: 100%;
+            height: 280px;
+            overflow: hidden;
+            background: var(--bg);
+        }
+
         .portfolio-image {
-            width: 100%; height: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            transition: transform 0.5s ease;
-            display: flex; align-items: center; justify-content: center;
-            color: white; font-size: 2rem;
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            transform: translateY(0);
         }
+
         .portfolio-overlay {
-            position: absolute; inset: 0;
-            background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent);
-            display: flex; flex-direction: column; justify-content: flex-end;
-            padding: 2rem; opacity: 0; transition: opacity 0.4s ease;
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(to top,
+            rgba(10, 12, 16, 0.95) 0%,
+            rgba(10, 12, 16, 0.7) 50%,
+            transparent 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 2;
         }
-        .portfolio-item:hover .portfolio-image { transform: scale(1.1); }
-        .portfolio-item:hover .portfolio-overlay { opacity: 1; }
-        .portfolio-category { color: var(--primary); font-size: 0.9rem; font-weight: 600; margin-bottom: 0.5rem; }
-        .portfolio-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: white; }
+
+        .portfolio-card:hover .portfolio-overlay {
+            opacity: 1;
+        }
+
+        .portfolio-category {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: rgba(59,130,246,0.9);
+            color: white;
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 3;
+            transform: translateY(-10px);
+            opacity: 0;
+            transition: all 0.4s ease;
+        }
+
+        .portfolio-card:hover .portfolio-category {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .portfolio-content {
+            padding: 1.8rem;
+        }
+
+        .portfolio-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+            transition: color 0.3s;
+        }
+
+        .portfolio-card:hover .portfolio-title {
+            color: var(--primary);
+        }
+
+        .portfolio-description {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
         .portfolio-link {
-            color: white; text-decoration: none;
-            display: inline-flex; align-items: center; gap: 0.5rem; font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
         }
-        .portfolio-link:hover { color: var(--primary); }
+
+        .portfolio-link:hover {
+            color: var(--secondary);
+            gap: 1rem;
+        }
+
+        .portfolio-link i {
+            transition: transform 0.3s;
+        }
+
+        .portfolio-link:hover i {
+            transform: translateX(-5px);
+        }
+
+        .portfolio-tech {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.4s ease;
+        }
+
+        .portfolio-card:hover .portfolio-tech {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .tech-tag {
+            background: rgba(59,130,246,0.15);
+            color: var(--primary);
+            padding: 0.3rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(59,130,246,0.3);
+        }
+
+        .card-number {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            font-size: 3rem;
+            font-weight: 900;
+            background: var(--gradient-1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            opacity: 0.1;
+            z-index: 1;
+            transition: opacity 0.4s;
+        }
+
+        .portfolio-card:hover .card-number {
+            opacity: 0.2;
+        }
+
+        @media (max-width: 1200px) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .portfolio {
+                padding: 60px 0;
+            }
+            .section-title {
+                font-size: 2.5rem;
+            }
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+            .portfolio-image-container {
+                height: 220px;
+            }
+            .portfolio-tech {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .section-title {
+                font-size: 2rem;
+            }
+            .portfolio-content {
+                padding: 1.5rem;
+            }
+        }
 
         /* Clients Section */
         .clients { padding: 80px 0; background: var(--card-bg); overflow: hidden; }
@@ -696,10 +914,6 @@
         .section-title { font-size: 3.5rem; font-weight: 900; margin-bottom: 1rem; }
         .section-subtitle { color: var(--text-muted); font-size: 1.2rem; max-width: 700px; margin: 0 auto; }
 
-        @media (max-width: 1200px) {
-            .portfolio-grid { grid-template-columns: repeat(2, 1fr); }
-            .stats-grid { grid-template-columns: repeat(2, 1fr); }
-        }
         @media (max-width: 992px) {
             .hero-title { font-size: 3rem; }
             .hero-tech-icons { justify-content: center; }
@@ -716,7 +930,6 @@
         @media (max-width: 768px) {
             .hero-title { font-size: 2.2rem; }
             .hero-visual { height: 400px; margin-top: 2rem; }
-            .portfolio-grid { grid-template-columns: 1fr; }
             .stats-grid { grid-template-columns: 1fr; }
             .cta-title { font-size: 2.5rem; }
             .horizontal-panel { width: 95vw; padding: 2rem; height: 60vh; }
@@ -830,7 +1043,7 @@
             <div class="scroll-hint"><span>مرر للأسفل</span><i class="fas fa-chevron-down"></i></div>
         </div>
     </div>
-<!--    <div class="progress-indicator"><div class="progress-fill" id="progressFill"></div></div>-->
+    <!-- <div class="progress-indicator"><div class="progress-fill" id="progressFill"></div></div> -->
 </section>
 
 <!-- Why Us Section -->
@@ -844,18 +1057,177 @@
         </div></div>
 </section>
 
-<!-- Portfolio Section -->
+<!-- ================================ -->
+<!-- قسم المشاريع الجديد (مع تأثير التمرير البطيء) -->
+<!-- ================================ -->
 <section class="portfolio" id="portfolio">
-    <div class="container"><div class="section-header"><span class="section-tag fade-up">💼 أعمالنا</span><h2 class="section-title fade-up">مشاريع نفخر بها</h2><p class="section-subtitle fade-up">نماذج من المشاريع التي نفذناها لعملائنا</p></div>
-        <div class="portfolio-filters fade-up"><button class="portfolio-filter active" data-filter="all">الكل</button><button class="portfolio-filter" data-filter="laravel">Laravel</button><button class="portfolio-filter" data-filter="wordpress">WordPress</button><button class="portfolio-filter" data-filter="ecommerce">متاجر</button></div>
+    <div class="portfolio-bg-glow"></div>
+    <div class="container">
+        <div class="section-header">
+            <span class="section-tag fade-up">💼 أعمالنا</span>
+            <h2 class="section-title fade-up">مشاريع نفخر بها</h2>
+            <p class="section-subtitle fade-up">مرر الماوس على أي مشروع لتتصفح الموقع كاملاً من الأعلى إلى الأسفل</p>
+        </div>
+
+        <div class="portfolio-filters fade-up">
+            <button class="portfolio-filter active" data-filter="all">الكل</button>
+            <button class="portfolio-filter" data-filter="laravel">Laravel</button>
+            <button class="portfolio-filter" data-filter="wordpress">WordPress</button>
+            <button class="portfolio-filter" data-filter="ecommerce">متاجر</button>
+        </div>
+
         <div class="portfolio-grid">
-            <div class="portfolio-item fade-up" data-category="laravel"><div class="portfolio-image"><i class="fas fa-code"></i></div><div class="portfolio-overlay"><span class="portfolio-category">Laravel</span><h3 class="portfolio-title">نظام إدارة الشركات</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-            <div class="portfolio-item fade-up" data-category="ecommerce"><div class="portfolio-image"><i class="fas fa-shopping-cart"></i></div><div class="portfolio-overlay"><span class="portfolio-category">متجر إلكتروني</span><h3 class="portfolio-title">متجر الأزياء الحديثة</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-            <div class="portfolio-item fade-up" data-category="wordpress"><div class="portfolio-image"><i class="fab fa-wordpress"></i></div><div class="portfolio-overlay"><span class="portfolio-category">WordPress</span><h3 class="portfolio-title">موقع شركة عقارية</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-            <div class="portfolio-item fade-up" data-category="laravel"><div class="portfolio-image"><i class="fas fa-heartbeat"></i></div><div class="portfolio-overlay"><span class="portfolio-category">Laravel</span><h3 class="portfolio-title">نظام الحجوزات الطبية</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-            <div class="portfolio-item fade-up" data-category="ecommerce"><div class="portfolio-image"><i class="fas fa-laptop"></i></div><div class="portfolio-overlay"><span class="portfolio-category">متجر إلكتروني</span><h3 class="portfolio-title">متجر الإلكترونيات</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-            <div class="portfolio-item fade-up" data-category="wordpress"><div class="portfolio-image"><i class="fas fa-gavel"></i></div><div class="portfolio-overlay"><span class="portfolio-category">WordPress</span><h3 class="portfolio-title">موقع مكتب محاماة</h3><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a></div></div>
-        </div></div>
+            <!-- مشروع 1 -->
+            <div class="portfolio-card fade-up" data-category="laravel">
+                <div class="card-number">01</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="نظام إدارة الشركات"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/3b82f6?text=Project+Screenshot'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">Laravel</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">نظام إدارة الشركات</h3>
+                    <p class="portfolio-description">نظام متكامل لإدارة الموارد البشرية والعمليات المالية مع لوحات تحكم متقدمة.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">Laravel</span>
+                        <span class="tech-tag">Vue.js</span>
+                        <span class="tech-tag">MySQL</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشروع 2 -->
+            <div class="portfolio-card fade-up" data-category="ecommerce">
+                <div class="card-number">02</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="متجر الأزياء الحديثة"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/8b5cf6?text=Online+Store'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">متجر إلكتروني</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">متجر الأزياء الحديثة</h3>
+                    <p class="portfolio-description">متجر إلكتروني متكامل مع بوابات دفع متعددة ونظام إدارة مخزون ذكي.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">WooCommerce</span>
+                        <span class="tech-tag">PHP</span>
+                        <span class="tech-tag">Stripe</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشروع 3 -->
+            <div class="portfolio-card fade-up" data-category="wordpress">
+                <div class="card-number">03</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="موقع شركة عقارية"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/f59e0b?text=Real+Estate'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">WordPress</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">موقع شركة عقارية</h3>
+                    <p class="portfolio-description">موقع تعريفي لشركة عقارية مع عرض العقارات ونظام حجز المواعيد.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Elementor</span>
+                        <span class="tech-tag">SEO</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشروع 4 -->
+            <div class="portfolio-card fade-up" data-category="laravel">
+                <div class="card-number">04</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="نظام الحجوزات الطبية"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/3b82f6?text=Medical+Booking'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">Laravel</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">نظام الحجوزات الطبية</h3>
+                    <p class="portfolio-description">منصة لحجز المواعيد الطبية مع إدارة العيادات والوصفات الإلكترونية.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">Laravel</span>
+                        <span class="tech-tag">React</span>
+                        <span class="tech-tag">API</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشروع 5 -->
+            <div class="portfolio-card fade-up" data-category="ecommerce">
+                <div class="card-number">05</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="متجر الإلكترونيات"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/8b5cf6?text=Electronics+Store'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">متجر إلكتروني</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">متجر الإلكترونيات</h3>
+                    <p class="portfolio-description">متجر متخصص في بيع الأجهزة الإلكترونية مع مقارنة المنتجات والضمان.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">Shopify</span>
+                        <span class="tech-tag">Liquid</span>
+                        <span class="tech-tag">PayPal</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- مشروع 6 -->
+            <div class="portfolio-card fade-up" data-category="wordpress">
+                <div class="card-number">06</div>
+                <div class="portfolio-image-container">
+                    <img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>"
+                         alt="موقع مكتب محاماة"
+                         class="portfolio-image"
+                         onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/f59e0b?text=Law+Firm'">
+                    <div class="portfolio-overlay"></div>
+                    <span class="portfolio-category">WordPress</span>
+                </div>
+                <div class="portfolio-content">
+                    <h3 class="portfolio-title">موقع مكتب محاماة</h3>
+                    <p class="portfolio-description">موقع احترافي لمكتب محاماة مع عرض الخدمات وحجز الاستشارات.</p>
+                    <a href="#" class="portfolio-link">
+                        عرض المشروع <i class="fas fa-arrow-left"></i>
+                    </a>
+                    <div class="portfolio-tech">
+                        <span class="tech-tag">WordPress</span>
+                        <span class="tech-tag">Custom Theme</span>
+                        <span class="tech-tag">Booking</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </section>
 
 <!-- Clients Section -->
@@ -1007,23 +1379,6 @@
         breakpoints: { 768: { slidesPerView: 2 }, 1200: { slidesPerView: 3 } }
     });
 
-    // Portfolio Filter
-    const filters = document.querySelectorAll('.portfolio-filter');
-    const items = document.querySelectorAll('.portfolio-item');
-    filters.forEach(filter => {
-        filter.addEventListener('click', () => {
-            filters.forEach(f => f.classList.remove('active')); filter.classList.add('active');
-            const category = filter.dataset.filter;
-            items.forEach(item => {
-                if (category === 'all' || item.dataset.category === category) {
-                    gsap.to(item, { opacity: 1, scale: 1, duration: 0.4, display: 'block' });
-                } else {
-                    gsap.to(item, { opacity: 0, scale: 0.8, duration: 0.4, onComplete: () => item.style.display = 'none' });
-                }
-            });
-        });
-    });
-
     // Navbar scroll effect
     window.addEventListener('scroll', () => { document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 50); });
 
@@ -1125,6 +1480,86 @@
     // إخفاء مؤشر التمرير
     window.addEventListener('scroll', () => {
         if (window.scrollY > 100) document.body.classList.add('scrolled'); else document.body.classList.remove('scrolled');
+    });
+
+    // ============================================
+    // كود قسم المشاريع الجديد (التمرير البطيء للصورة)
+    // ============================================
+    const cards = document.querySelectorAll('.portfolio-card');
+    cards.forEach(card => {
+        const container = card.querySelector('.portfolio-image-container');
+        const img = card.querySelector('.portfolio-image');
+
+        if (!container || !img) return;
+
+        function setScrollDistance() {
+            if (img.complete) {
+                calculateAndSetScroll();
+            } else {
+                img.addEventListener('load', calculateAndSetScroll);
+                img.addEventListener('error', () => {
+                    setTimeout(calculateAndSetScroll, 100);
+                });
+            }
+        }
+
+        function calculateAndSetScroll() {
+            const containerHeight = container.offsetHeight;
+            const imgHeight = img.offsetHeight;
+            if (imgHeight > containerHeight && imgHeight > 0 && containerHeight > 0) {
+                const maxScroll = -(imgHeight - containerHeight);
+                card.dataset.scrollAmount = maxScroll;
+                gsap.set(img, { y: 0 });
+            } else {
+                card.dataset.scrollAmount = 0;
+            }
+        }
+
+        setScrollDistance();
+        let resizeTimer;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(setScrollDistance, 250);
+        });
+
+        card.addEventListener('mouseenter', () => {
+            const scrollAmount = parseFloat(card.dataset.scrollAmount) || 0;
+            if (scrollAmount !== 0) {
+                gsap.to(img, {
+                    y: scrollAmount,
+                    duration: 2.8,
+                    ease: 'power2.inOut',
+                    overwrite: true
+                });
+            }
+        });
+
+        card.addEventListener('mouseleave', () => {
+            gsap.to(img, {
+                y: 0,
+                duration: 0.4,
+                ease: 'power2.out',
+                overwrite: true
+            });
+        });
+    });
+
+    // Portfolio Filter (للقسم الجديد)
+    const filters = document.querySelectorAll('.portfolio-filter');
+    const portfolioCards = document.querySelectorAll('.portfolio-card');
+    filters.forEach(filter => {
+        filter.addEventListener('click', () => {
+            filters.forEach(f => f.classList.remove('active'));
+            filter.classList.add('active');
+            const category = filter.dataset.filter;
+            portfolioCards.forEach(card => {
+                if (category === 'all' || card.dataset.category === category) {
+                    gsap.to(card, { opacity: 1, scale: 1, duration: 0.4, display: 'block' });
+                } else {
+                    gsap.to(card, { opacity: 0, scale: 0.8, duration: 0.4, onComplete: () => card.style.display = 'none' });
+                }
+            });
+        });
     });
 
     window.addEventListener('load', () => ScrollTrigger.refresh());
