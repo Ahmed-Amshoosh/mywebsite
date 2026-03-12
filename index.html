@@ -1057,6 +1057,16 @@
             grid-template-columns: repeat(3, 1fr);
             gap: 2rem;
         }
+        @media (max-width:992px ) {
+            .portfolio-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+        @media (max-width:500px ) {
+            .portfolio-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
 
         .portfolio-card {
             position: relative;
@@ -1778,13 +1788,8 @@
                 <div class="hero-tech-icons"><i class="fab fa-laravel"></i><i class="fab fa-php"></i><i class="fab fa-js"></i><i class="fab fa-python"></i><i class="fas fa-database"></i></div>
                 <div class="typewriter" id="typewriter"></div>
                 <h1 class="hero-title">مطور <span>حلول رقمية</span> متكاملة</h1>
-                <p class="hero-subtitle">أحول أفكارك إلى واقع رقمي احترافي بأحدث التقنيات. خبرة 8 سنوات في تطوير الأنظمة، المتاجر الإلكترونية، ومواقع WordPress.</p>
+                <p class="hero-subtitle">أحول أفكارك إلى واقع رقمي احترافي بأحدث التقنيات. خبرة في تطوير الأنظمة، المتاجر الإلكترونية، ومواقع WordPress.</p>
                 <div class="hero-buttons"><a href="#services" class="btn btn-primary-custom">استكشف خدماتي</a></div>
-                <div class="hero-stats">
-                    <div class="hero-stat-item"><div class="hero-stat-number">50+</div><div class="hero-stat-label">مشروع ناجح</div></div>
-                    <div class="hero-stat-item"><div class="hero-stat-number">8</div><div class="hero-stat-label">سنوات خبرة</div></div>
-                    <div class="hero-stat-item"><div class="hero-stat-number">100%</div><div class="hero-stat-label">رضا العملاء</div></div>
-                </div>
             </div>
             <div class="col-lg-5">
                 <div class="hero-visual">
@@ -1828,6 +1833,98 @@
             <div class="col-lg-4 col-md-6 fade-up"><div class="service-card"><div class="card-icon"><i class="fab fa-wordpress"></i></div><h3 class="card-title">مواقع WordPress</h3><p class="card-text">تصاميم فريدة، سرعة عالية، تحسين SEO وإضافات مخصصة.</p><ul class="card-features list-unstyled"><li><i class="fas fa-check-circle me-2"></i>قوالب مخصصة بالكامل</li><li><i class="fas fa-check-circle me-2"></i>تهيئة SEO متقدمة</li><li><i class="fas fa-check-circle me-2"></i>أمان وحماية عالية</li><li><i class="fas fa-check-circle me-2"></i>صيانة وتحديثات دورية</li></ul><a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a></div></div>
             <!-- بطاقة 3 -->
             <div class="col-lg-4 col-md-6 fade-up"><div class="service-card"><div class="card-icon"><i class="fas fa-shopping-cart"></i></div><h3 class="card-title">متاجر إلكترونية</h3><p class="card-text">متاجر متكاملة مع بوابات دفع وشحن وإدارة مخزون متطورة.</p><ul class="card-features list-unstyled"><li><i class="fas fa-check-circle me-2"></i>تصميم متجاوب وسلس</li><li><i class="fas fa-check-circle me-2"></i>دفع آمن (مدى، فيزا، إلخ)</li><li><i class="fas fa-check-circle me-2"></i>شحن متعدد الخيارات</li><li><i class="fas fa-check-circle me-2"></i>تحليلات وتقارير</li></ul><a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a></div></div>
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="service-card">
+                    <div class="card-icon"><i class="fas fa-envelope"></i></div>
+
+                    <h3 class="card-title">إنشاء الإيميلات الاحترافية</h3>
+
+                    <p class="card-text">
+                        إنشاء وإعداد بريد إلكتروني احترافي باسم نطاق شركتك لتعزيز الموثوقية والتواصل الرسمي.
+                    </p>
+
+                    <ul class="card-features list-unstyled">
+                        <li><i class="fas fa-check-circle me-2"></i>إيميلات باسم الدومين</li>
+                        <li><i class="fas fa-check-circle me-2"></i>إعداد Google Workspace</li>
+                        <li><i class="fas fa-check-circle me-2"></i>حماية ومكافحة السبام</li>
+                        <li><i class="fas fa-check-circle me-2"></i>ربط مع الجوال وOutlook</li>
+                    </ul>
+
+                    <a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a>
+
+                </div>
+            </div>
+
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="service-card">
+                    <div class="card-icon"><i class="fas fa-shopping-bag"></i></div>
+
+                    <h3 class="card-title">متاجر سلة</h3>
+
+                    <p class="card-text">
+                        تصميم وإدارة متاجر احترافية على منصة سلة مع إعداد الدفع والشحن وتحسين تجربة المستخدم.
+                    </p>
+
+                    <ul class="card-features list-unstyled">
+                        <li><i class="fas fa-check-circle me-2"></i>تصميم متجر احترافي</li>
+                        <li><i class="fas fa-check-circle me-2"></i>إضافة المنتجات وتنظيمها</li>
+                        <li><i class="fas fa-check-circle me-2"></i>ربط بوابات الدفع</li>
+                        <li><i class="fas fa-check-circle me-2"></i>إدارة الطلبات والتقارير</li>
+                    </ul>
+
+                    <a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="service-card">
+                    <div class="card-icon"><i class="fas fa-search"></i></div>
+
+                    <h3 class="card-title">تحسين محركات البحث SEO</h3>
+
+                    <p class="card-text">
+                        تحسين ظهور موقعك في نتائج البحث عبر بناء روابط أرشفة قوية وتحسين بنية الموقع.
+                    </p>
+
+                    <ul class="card-features list-unstyled">
+                        <li><i class="fas fa-check-circle me-2"></i>أرشفة الموقع في Google</li>
+                        <li><i class="fas fa-check-circle me-2"></i>بناء روابط خارجية</li>
+                        <li><i class="fas fa-check-circle me-2"></i>تحسين سرعة الموقع</li>
+                        <li><i class="fas fa-check-circle me-2"></i>تهيئة المحتوى للكلمات المفتاحية</li>
+                    </ul>
+
+                    <a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a>
+
+                </div>
+            </div>
+
+
+            <div class="col-lg-4 col-md-6 fade-up">
+                <div class="service-card">
+                    <div class="card-icon"><i class="fas fa-tools"></i></div>
+
+                    <h3 class="card-title">صيانة المواقع</h3>
+
+                    <p class="card-text">
+                        خدمات صيانة وتحديث مستمرة للمواقع والمتاجر لضمان الأداء العالي والأمان.
+                    </p>
+
+                    <ul class="card-features list-unstyled">
+                        <li><i class="fas fa-check-circle me-2"></i>تحديثات النظام والإضافات</li>
+                        <li><i class="fas fa-check-circle me-2"></i>نسخ احتياطي دوري</li>
+                        <li><i class="fas fa-check-circle me-2"></i>مراقبة الأمان</li>
+                        <li><i class="fas fa-check-circle me-2"></i>تحسين الأداء والسرعة</li>
+                    </ul>
+
+                    <a href="#" class="btn-link">استكشف <i class="fas fa-arrow-left"></i></a>
+
+                </div>
+            </div>
+
+
+
         </div>
     </div>
 </section>
@@ -1840,7 +1937,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="why-card scale-in">
                     <div class="why-icon"><i class="fas fa-clock"></i></div>
-                    <div class="why-number">8+</div>
+                    <div class="why-number">4+</div>
                     <h3 class="why-title">سنوات خبرة</h3>
                     <p class="why-text">خبرة عملية في تطوير الحلول الرقمية</p>
                 </div>
@@ -1848,7 +1945,7 @@
             <div class="col-md-6 col-lg-3">
                 <div class="why-card scale-in">
                     <div class="why-icon"><i class="fas fa-project-diagram"></i></div>
-                    <div class="why-number">50+</div>
+                    <div class="why-number">30+</div>
                     <h3 class="why-title">مشروع ناجح</h3>
                     <p class="why-text">مشاريع تم إنجازها بنجاح تام</p>
                 </div>
@@ -1883,25 +1980,11 @@
                     <span class="section-tag">👥 فريق العمل</span>
                     <h2>خبراء متحدون لتحقيق رؤيتك</h2>
                     <p>نحن مجموعة من المطورين والمصممين واستراتيجيي التسويق نعمل معاً بشغف لتحويل أفكارك إلى منتجات رقمية استثنائية. خبرتنا المتنوعة تضمن لك حلولاً متكاملة تلبي احتياجات السوق.</p>
-                    <div class="team-stats">
-                        <div class="team-stat-item"><span class="team-stat-number">12+</span><span class="team-stat-label">خبير</span></div>
-                        <div class="team-stat-item"><span class="team-stat-number">7</span><span class="team-stat-label">لغات برمجة</span></div>
-                        <div class="team-stat-item"><span class="team-stat-number">∞</span><span class="team-stat-label">شغف</span></div>
-                    </div>
                 </div>
             </div>
             <div class="col-lg-6">
-                <div class="team-icon-container fade-up">
-                    <!-- الأيقونات المتداخلة -->
-                    <div class="icon-circle icon-1"><i class="fas fa-code"></i></div>
-                    <div class="icon-circle icon-2"><i class="fas fa-paint-brush"></i></div>
-                    <div class="icon-circle icon-3"><i class="fas fa-chart-line"></i></div>
-                    <div class="icon-circle icon-4"><i class="fas fa-database"></i></div>
-                    <div class="icon-circle icon-5"><i class="fas fa-mobile-alt"></i></div>
-                    <div class="icon-circle icon-6"><i class="fas fa-cloud-upload-alt"></i></div>
-                    <!-- خلفية متدرجة متحركة -->
-                    <div class="icon-bg-glow"></div>
-                </div>
+                <!-- صورة الفريق محسنة ومتجاوبة -->
+                <img src="team.png" class="img-fluid team-image" alt="فريق العمل">
             </div>
         </div>
     </div>
@@ -1965,7 +2048,22 @@
         font-size: 1rem;
     }
 
-    /* الحاوية الأيقونية */
+    /* ===== تحسينات الصورة ===== */
+    .team-image {
+        border-radius: 30px;
+        box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+        max-width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .team-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 35px 60px -15px rgba(40, 209, 231, 0.4);
+    }
+
+    /* الحاوية الأيقونية (اختياري إذا كنت تريد إظهار الأيقونات حول الصورة لاحقاً) */
     .team-icon-container {
         position: relative;
         width: 100%;
@@ -2056,6 +2154,9 @@
             height: 50px;
             font-size: 1.2rem;
         }
+        .team-image {
+            border-radius: 20px; /* أنعم على الشاشات الصغيرة */
+        }
     }
 </style>
 <!-- ========== قسم التحديات (المحسّن) ========== -->
@@ -2085,9 +2186,10 @@
     <div class="container">
         <div class="section-header"><span class="section-tag fade-up">💼 أعمالنا</span><h2 class="section-title fade-up">مشاريع نفخر بها</h2><p class="section-subtitle fade-up">مرر الماوس على أي مشروع لترى تفاصيل أكثر</p></div>
         <div class="portfolio-filters fade-up"><button class="portfolio-filter active" data-filter="all">الكل</button><button class="portfolio-filter" data-filter="laravel">Laravel</button><button class="portfolio-filter" data-filter="wordpress">WordPress</button><button class="portfolio-filter" data-filter="ecommerce">متاجر</button></div>
-        <div class="portfolio-grid">
+        <div class="portfolio-grid ">
             <!-- مشروع 1 -->
-            <div class="portfolio-card fade-up" data-category="laravel"><div class="card-number">01</div><div class="portfolio-image-container"><img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>" alt="نظام إدارة الشركات" class="portfolio-image" onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/3b82f6?text=Project+Screenshot'"><div class="portfolio-overlay"></div><span class="portfolio-category">Laravel</span></div><div class="portfolio-content"><h3 class="portfolio-title">نظام إدارة الشركات</h3><p class="portfolio-description">نظام متكامل لإدارة الموارد البشرية والعمليات المالية مع لوحات تحكم متقدمة.</p><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a><div class="portfolio-tech"><span class="tech-tag">Laravel</span><span class="tech-tag">Vue.js</span><span class="tech-tag">MySQL</span></div></div></div>
+            <div class="portfolio-card fade-up" data-category="laravel">
+                <div class="card-number">01</div><div class="portfolio-image-container"><img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>" alt="نظام إدارة الشركات" class="portfolio-image" onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/3b82f6?text=Project+Screenshot'"><div class="portfolio-overlay"></div><span class="portfolio-category">Laravel</span></div><div class="portfolio-content"><h3 class="portfolio-title">نظام إدارة الشركات</h3><p class="portfolio-description">نظام متكامل لإدارة الموارد البشرية والعمليات المالية مع لوحات تحكم متقدمة.</p><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a><div class="portfolio-tech"><span class="tech-tag">Laravel</span><span class="tech-tag">Vue.js</span><span class="tech-tag">MySQL</span></div></div></div>
             <!-- مشروع 2 -->
             <div class="portfolio-card fade-up" data-category="ecommerce"><div class="card-number">02</div><div class="portfolio-image-container"><img src="https://amshooshdev.netlify.app/img.png?t=<?php echo time(); ?>" alt="متجر الأزياء الحديثة" class="portfolio-image" onerror="this.src='https://via.placeholder.com/800x2000/1a1e2a/8b5cf6?text=Online+Store'"><div class="portfolio-overlay"></div><span class="portfolio-category">متجر إلكتروني</span></div><div class="portfolio-content"><h3 class="portfolio-title">متجر الأزياء الحديثة</h3><p class="portfolio-description">متجر إلكتروني متكامل مع بوابات دفع متعددة ونظام إدارة مخزون ذكي.</p><a href="#" class="portfolio-link">عرض المشروع <i class="fas fa-arrow-left"></i></a><div class="portfolio-tech"><span class="tech-tag">WooCommerce</span><span class="tech-tag">PHP</span><span class="tech-tag">Stripe</span></div></div></div>
             <!-- مشروع 3 -->
@@ -2130,18 +2232,6 @@
     </div>
 </section>
 
-<!-- Stats Section (مُعدل) -->
-<section class="stats" id="stats">
-    <div class="container">
-        <div class="stats-grid">
-            <div class="stat-card scale-in"><div class="stat-number">8+</div><div class="stat-label">سنوات خبرة</div></div>
-            <div class="stat-card scale-in"><div class="stat-number">50+</div><div class="stat-label">مشروع ناجح</div></div>
-            <div class="stat-card scale-in"><div class="stat-number">100%</div><div class="stat-label">التزام بالمواعيد</div></div>
-            <div class="stat-card scale-in"><div class="stat-number">24/7</div><div class="stat-label">دعم فني</div></div>
-        </div>
-    </div>
-</section>
-
 <!-- CTA Section -->
 <section class="cta" id="contact">
     <div class="cta-content">
@@ -2156,9 +2246,9 @@
             <div class="col-lg-4"><img src="./logo.png" height="100" alt="شعار"><p class="text-muted mt-4">مطور حلول رقمية متكاملة متخصص في Laravel، WordPress، والمتاجر الإلكترونية. نقدم حلولاً مبتكرة بجودة عالمية.</p><div class="social-links"><a href="#" class="social-link"><i class="fab fa-twitter"></i></a><a href="#" class="social-link"><i class="fab fa-linkedin"></i></a><a href="#" class="social-link"><i class="fab fa-github"></i></a><a href="#" class="social-link"><i class="fab fa-instagram"></i></a></div></div>
             <div class="col-lg-2 col-md-6"><h5 class="footer-title">روابط سريعة</h5><ul class="footer-links"><li><a href="#home">الرئيسية</a></li><li><a href="#services">الخدمات</a></li><li><a href="#portfolio">أعمالي</a></li><li><a href="#why-us">لماذا نحن</a></li></ul></div>
             <div class="col-lg-3 col-md-6"><h5 class="footer-title">الخدمات</h5><ul class="footer-links"><li><a href="#services">تطوير Laravel</a></li><li><a href="#services">مواقع WordPress</a></li><li><a href="#services">المتاجر الإلكترونية</a></li><li><a href="#services">تحسين SEO</a></li></ul></div>
-            <div class="col-lg-3 col-md-6"><h5 class="footer-title">تواصل معي</h5><ul class="footer-links"><li><i class="fas fa-envelope me-2"></i> ahmed@example.com</li><li><i class="fab fa-whatsapp me-2"></i> +966 50 000 0000</li><li><i class="fas fa-map-marker-alt me-2"></i> الرياض، المملكة العربية السعودية</li></ul></div>
+            <div class="col-lg-3 col-md-6"><h5 class="footer-title">تواصل معي</h5><ul class="footer-links"><li><i class="fas fa-envelope me-2"></i> amshoosh2@gmail.com</li><li><i class="fab fa-whatsapp me-2"></i> 967772913602+</li><li><i class="fas fa-map-marker-alt me-2"></i> حضرموت، اليمن</li></ul></div>
         </div>
-        <div class="footer-bottom"><p>&copy; 2026 أحمد العلي. جميع الحقوق محفوظة. تصميم وتطوير بأحدث التقنيات</p></div>
+        <div class="footer-bottom"><p>&copy; 2026 AmshooshDev. جميع الحقوق محفوظة. تصميم وتطوير بأحدث التقنيات</p></div>
     </div>
 </footer>
 
