@@ -1,0 +1,2688 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام إدارة المهام المتكامل | TaskPro</title>
+
+    <!-- Bootstrap 5 RTL/LTR support -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" id="bootstrap-css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" id="font-css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- FullCalendar for calendar page -->
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <style>
+        :root {
+            --primary-color: #4361ee;
+            --secondary-color: #3f37c9;
+            --success-color: #4cc9f0;
+            --danger-color: #f72585;
+            --warning-color: #f8961e;
+            --info-color: #4895ef;
+            --dark-color: #1d3557;
+            --light-color: #f8f9fa;
+            --sidebar-width: 280px;
+            --header-height: 70px;
+            --border-radius: 16px;
+            --shadow: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8ec 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Language specific */
+        body.en {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ==================== Sidebar ==================== */
+        .sidebar {
+            position: fixed;
+            right: 0;
+            top: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, #1d3557 0%, #2a4a7f 100%);
+            color: white;
+            z-index: 1000;
+            transition: all 0.3s ease;
+            overflow-y: auto;
+            box-shadow: -5px 0 20px rgba(0,0,0,0.1);
+        }
+
+        body.en .sidebar {
+            right: auto;
+            left: 0;
+            box-shadow: 5px 0 20px rgba(0,0,0,0.1);
+        }
+
+        .sidebar-brand {
+            padding: 25px 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .sidebar-brand i {
+            font-size: 28px;
+            color: var(--success-color);
+        }
+
+        .sidebar-brand h4 {
+            font-weight: 700;
+            font-size: 22px;
+            margin: 0;
+        }
+
+        .sidebar-brand span {
+            color: var(--success-color);
+        }
+
+        .sidebar-menu {
+            padding: 20px 15px;
+        }
+
+        .menu-category {
+            font-size: 12px;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin: 20px 0 10px 10px;
+            font-weight: 600;
+        }
+
+        .sidebar-menu .nav-link {
+            color: rgba(255,255,255,0.75);
+            padding: 14px 18px;
+            margin-bottom: 6px;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-weight: 500;
+            font-size: 15px;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .sidebar-menu .nav-link i {
+            width: 24px;
+            text-align: center;
+            font-size: 18px;
+        }
+
+        .sidebar-menu .nav-link:hover {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        body.en .sidebar-menu .nav-link:hover {
+            transform: translateX(5px);
+        }
+
+        .sidebar-menu .nav-link.active {
+            background: var(--primary-color);
+            color: white;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+        }
+
+        .sidebar-menu .nav-link .badge {
+            margin-right: auto;
+            background: var(--danger-color);
+            font-size: 11px;
+            padding: 4px 10px;
+        }
+
+        body.en .sidebar-menu .nav-link .badge {
+            margin-right: 0;
+            margin-left: auto;
+        }
+
+        .sidebar-footer {
+            padding: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-info img {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: 2px solid var(--success-color);
+        }
+
+        .user-info .user-details h6 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .user-info .user-details p {
+            margin: 0;
+            font-size: 12px;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ==================== Main Content ==================== */
+        .main-content {
+            margin-right: var(--sidebar-width);
+            min-height: 100vh;
+            transition: all 0.3s ease;
+        }
+
+        body.en .main-content {
+            margin-right: 0;
+            margin-left: var(--sidebar-width);
+        }
+
+        /* ==================== Header ==================== */
+        .top-header {
+            background: white;
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--dark-color);
+            cursor: pointer;
+        }
+
+        .search-box {
+            position: relative;
+            width: 350px;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 12px 45px 12px 20px;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+        }
+
+        body.en .search-box input {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .search-box input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #adb5bd;
+        }
+
+        body.en .search-box i {
+            right: auto;
+            left: 15px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-btn {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            border: none;
+            background: #f8f9fa;
+            color: var(--dark-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .header-btn:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .header-btn .notification-dot {
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            width: 10px;
+            height: 10px;
+            background: var(--danger-color);
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        body.en .header-btn .notification-dot {
+            left: auto;
+            right: 8px;
+        }
+
+        .dropdown-menu {
+            border: none;
+            border-radius: 12px;
+            box-shadow: var(--shadow-hover);
+            padding: 10px;
+        }
+
+        .dropdown-item {
+            padding: 10px 15px;
+            border-radius: 8px;
+            transition: all 0.3s;
+            font-family: 'Cairo', sans-serif;
+            cursor: pointer;
+        }
+
+        body.en .dropdown-item {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .dropdown-item:hover {
+            background: #f8f9fa;
+        }
+
+        /* ==================== Page Content ==================== */
+        .page-content {
+            padding: 30px;
+        }
+
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .page-title h2 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .page-title p {
+            color: #6c757d;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 28px;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(67, 97, 238, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(67, 97, 238, 0.4);
+            color: white;
+        }
+
+        /* ==================== Stats Cards ==================== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        body.en .stat-card::before {
+            left: auto;
+            right: 0;
+        }
+
+        .stat-card.primary::before { background: var(--primary-color); }
+        .stat-card.success::before { background: var(--success-color); }
+        .stat-card.warning::before { background: var(--warning-color); }
+        .stat-card.danger::before { background: var(--danger-color); }
+
+        .stat-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+
+        .stat-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .stat-card.primary .stat-icon { background: rgba(67, 97, 238, 0.1); color: var(--primary-color); }
+        .stat-card.success .stat-icon { background: rgba(76, 201, 240, 0.1); color: var(--success-color); }
+        .stat-card.warning .stat-icon { background: rgba(248, 150, 30, 0.1); color: var(--warning-color); }
+        .stat-card.danger .stat-icon { background: rgba(247, 37, 133, 0.1); color: var(--danger-color); }
+
+        .stat-card-body h3 {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .stat-card-body p {
+            color: #6c757d;
+            margin: 5px 0 0 0;
+            font-size: 14px;
+        }
+
+        .stat-change {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+            margin-top: 15px;
+        }
+
+        .stat-change.positive { color: #2ecc71; }
+        .stat-change.negative { color: var(--danger-color); }
+
+        /* ==================== Cards ==================== */
+        .content-card {
+            background: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+
+        .card-header-custom {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e9ecef;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .card-header-custom h5 {
+            margin: 0;
+            font-weight: 700;
+            color: var(--dark-color);
+            font-size: 18px;
+        }
+
+        .card-body-custom {
+            padding: 25px;
+        }
+
+        /* ==================== Tables ==================== */
+        .table-custom {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .table-custom thead th {
+            background: #f8f9fa;
+            padding: 15px 20px;
+            font-weight: 600;
+            color: var(--dark-color);
+            font-size: 14px;
+            border: none;
+        }
+
+        .table-custom thead th:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .table-custom thead th:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        body.en .table-custom thead th:first-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        body.en .table-custom thead th:last-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .table-custom tbody tr {
+            background: white;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: all 0.3s;
+        }
+
+        .table-custom tbody tr:hover {
+            transform: scale(1.01);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .table-custom tbody td {
+            padding: 18px 20px;
+            vertical-align: middle;
+            border: none;
+        }
+
+        .table-custom tbody td:first-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .table-custom tbody td:last-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        body.en .table-custom tbody td:first-child {
+            border-radius: 0 12px 12px 0;
+        }
+
+        body.en .table-custom tbody td:last-child {
+            border-radius: 12px 0 0 12px;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .status-badge.pending { background: #fff3cd; color: #856404; }
+        .status-badge.progress { background: #d1ecf1; color: #0c5460; }
+        .status-badge.completed { background: #d4edda; color: #155724; }
+        .status-badge.overdue { background: #f8d7da; color: #721c24; }
+
+        .progress-custom {
+            height: 8px;
+            border-radius: 10px;
+            background: #e9ecef;
+            overflow: hidden;
+            flex-grow: 1;
+        }
+
+        .progress-custom .progress-bar {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+
+        .avatar-group {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar-group img {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            border: 2px solid white;
+            margin-left: -10px;
+        }
+
+        body.en .avatar-group img {
+            margin-left: 0;
+            margin-right: -10px;
+        }
+
+        .avatar-group img:first-child {
+            margin-left: 0;
+        }
+
+        body.en .avatar-group img:first-child {
+            margin-right: 0;
+        }
+
+        /* ==================== Modal ==================== */
+        .modal-content {
+            border: none;
+            border-radius: 20px;
+            box-shadow: var(--shadow-hover);
+        }
+
+        .modal-header {
+            padding: 20px 25px;
+            border-bottom: 1px solid #e9ecef;
+            border-radius: 20px 20px 0 0;
+        }
+
+        .modal-title {
+            font-weight: 700;
+            color: var(--dark-color);
+        }
+
+        .modal-body {
+            padding: 25px;
+        }
+
+        .modal-footer {
+            padding: 20px 25px;
+            border-top: 1px solid #e9ecef;
+            border-radius: 0 0 20px 20px;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 8px;
+        }
+
+        .form-control, .form-select {
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 12px 18px;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.3s;
+        }
+
+        body.en .form-control, body.en .form-select {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 4px rgba(67, 97, 238, 0.1);
+        }
+
+        /* ==================== Timeline ==================== */
+        .timeline {
+            position: relative;
+            padding-right: 30px;
+        }
+
+        body.en .timeline {
+            padding-right: 0;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #e9ecef;
+        }
+
+        body.en .timeline::before {
+            right: auto;
+            left: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 25px;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            right: -34px;
+            top: 5px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px var(--primary-color);
+        }
+
+        body.en .timeline-item::before {
+            right: auto;
+            left: -34px;
+        }
+
+        .timeline-item.completed::before {
+            background: var(--success-color);
+            box-shadow: 0 0 0 2px var(--success-color);
+        }
+
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+        }
+
+        .timeline-content h6 {
+            margin: 0;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .timeline-content p {
+            margin: 5px 0 0 0;
+            font-size: 13px;
+            color: #6c757d;
+        }
+
+        /* ==================== Page Sections ==================== */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease;
+        }
+
+        .page-section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ==================== Employee Cards ==================== */
+        .employee-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 25px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: all 0.3s;
+        }
+
+        .employee-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .employee-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            margin: 0 auto 15px;
+            border: 4px solid var(--primary-color);
+            padding: 3px;
+        }
+
+        .employee-avatar img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .employee-card h5 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin: 0;
+        }
+
+        .employee-card p {
+            color: #6c757d;
+            font-size: 14px;
+            margin: 5px 0 15px 0;
+        }
+
+        .employee-stats {
+            display: flex;
+            justify-content: space-around;
+            padding-top: 15px;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .employee-stat {
+            text-align: center;
+        }
+
+        .employee-stat h4 {
+            font-weight: 700;
+            color: var(--primary-color);
+            margin: 0;
+        }
+
+        .employee-stat span {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        /* ==================== File Badges ==================== */
+        .file-badge {
+            background: #e9ecef;
+            color: var(--dark-color);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* ==================== FullCalendar customization ==================== */
+        #calendarContainer {
+            min-height: 600px;
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 20px;
+        }
+
+        .fc-event {
+            cursor: pointer;
+        }
+
+        .fc-toolbar-title {
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body.en .fc-toolbar-title {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* ==================== Responsive ==================== */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(100%);
+            }
+
+            body.en .sidebar {
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .main-content {
+                margin-right: 0;
+            }
+
+            body.en .main-content {
+                margin-left: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .search-box {
+                width: 200px;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .page-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .search-box {
+                width: 100%;
+            }
+
+            .header-right .header-btn {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* ==================== Scrollbar ==================== */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary-color);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--secondary-color);
+        }
+
+        /* ==================== Utility Classes ==================== */
+        .text-gradient {
+            background: linear-gradient(135deg, var(--primary-color), var(--success-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .bg-gradient-primary {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .rounded-20 {
+            border-radius: 20px;
+        }
+
+        .shadow-custom {
+            box-shadow: var(--shadow);
+        }
+
+        .cursor-pointer {
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+<!-- ==================== Sidebar ==================== -->
+<aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+        <i class="fas fa-check-double"></i>
+        <h4>تاسك<span>برو</span></h4>
+    </div>
+
+    <nav class="sidebar-menu">
+        <div class="menu-category">القائمة الرئيسية</div>
+
+        <a href="#" class="nav-link active" onclick="showPage('dashboard', this)">
+            <i class="fas fa-home"></i>
+            <span>لوحة التحكم</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('tasks', this)">
+            <i class="fas fa-tasks"></i>
+            <span>المهام</span>
+            <span class="badge" id="taskBadge">0</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('employees', this)">
+            <i class="fas fa-users"></i>
+            <span>الموظفين</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('projects', this)">
+            <i class="fas fa-project-diagram"></i>
+            <span>المشاريع</span>
+        </a>
+
+        <div class="menu-category">الإدارة</div>
+
+        <a href="#" class="nav-link" onclick="showPage('files', this)">
+            <i class="fas fa-folder-open"></i>
+            <span>الملفات</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('reports', this)">
+            <i class="fas fa-chart-line"></i>
+            <span>التقارير</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('calendar', this)">
+            <i class="fas fa-calendar-alt"></i>
+            <span>التقويم</span>
+        </a>
+
+        <div class="menu-category">النظام</div>
+
+        <a href="#" class="nav-link" onclick="showPage('settings', this)">
+            <i class="fas fa-cog"></i>
+            <span>الإعدادات</span>
+        </a>
+
+        <a href="#" class="nav-link" onclick="showPage('notifications', this)">
+            <i class="fas fa-bell"></i>
+            <span>الإشعارات</span>
+            <span class="badge" id="notificationBadge">0</span>
+        </a>
+    </nav>
+
+    <div class="sidebar-footer">
+        <div class="user-info">
+            <img src="https://ui-avatars.com/api/?name=Admin&background=4361ee&color=fff" alt="User">
+            <div class="user-details">
+                <h6>أحمد المدير</h6>
+                <p>مدير النظام</p>
+            </div>
+        </div>
+    </div>
+</aside>
+
+<!-- ==================== Main Content ==================== -->
+<main class="main-content">
+    <!-- Header -->
+    <header class="top-header">
+        <div class="header-left">
+            <button class="menu-toggle" onclick="toggleSidebar()">
+                <i class="fas fa-bars"></i>
+            </button>
+            <div class="search-box">
+                <i class="fas fa-search"></i>
+                <input type="text" placeholder="بحث عن مهمة، موظف، مشروع..." id="globalSearch" onkeyup="globalSearch()">
+            </div>
+        </div>
+        <div class="header-right">
+            <button class="header-btn" onclick="showPage('notifications')">
+                <i class="fas fa-bell"></i>
+                <span class="notification-dot" id="notificationDot" style="display: none;"></span>
+            </button>
+            <button class="header-btn" onclick="showPage('settings')">
+                <i class="fas fa-cog"></i>
+            </button>
+            <div class="dropdown">
+                <button class="header-btn" data-bs-toggle="dropdown">
+                    <i class="fas fa-user"></i>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-end">
+                    <li><a class="dropdown-item" href="#" onclick="showPage('settings')"><i class="fas fa-user ms-2"></i>الملف الشخصي</a></li>
+                    <li><a class="dropdown-item" href="#" onclick="showPage('settings')"><i class="fas fa-cog ms-2"></i>الإعدادات</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item text-danger" href="#" id="logoutBtn"><i class="fas fa-sign-out-alt ms-2"></i>تسجيل خروج</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Page Content -->
+    <div class="page-content" id="pageContent">
+
+        <!-- ==================== Dashboard Page ==================== -->
+        <section id="dashboard" class="page-section active">
+            <div class="page-header animate__animated animate__fadeIn">
+                <div class="page-title">
+                    <h2>👋 مرحباً بك، أحمد</h2>
+                    <p id="dashboardSubtitle">إليك ملخص أداء الفريق اليوم</p>
+                </div>
+                <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                    <i class="fas fa-plus"></i>
+                    مهمة جديدة
+                </button>
+            </div>
+
+            <!-- Stats Cards -->
+            <div class="stats-grid" id="statsGrid">
+                <!-- ديناميكياً -->
+            </div>
+
+            <!-- Charts & Activity -->
+            <div class="row">
+                <div class="col-lg-8">
+                    <div class="content-card animate__animated animate__fadeInUp">
+                        <div class="card-header-custom">
+                            <h5><i class="fas fa-chart-bar ms-2"></i>أداء الفريق الشهري</h5>
+                            <select class="form-select form-select-sm" style="width: auto;" id="chartPeriod" onchange="updatePerformanceChart()">
+                                <option value="week">هذا الأسبوع</option>
+                                <option value="month" selected>هذا الشهر</option>
+                                <option value="year">هذا العام</option>
+                            </select>
+                        </div>
+                        <div class="card-body-custom">
+                            <canvas id="performanceChart" height="120"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <div class="content-card animate__animated animate__fadeInUp" style="animation-delay: 0.1s;">
+                        <div class="card-header-custom">
+                            <h5><i class="fas fa-history ms-2"></i>آخر النشاطات</h5>
+                            <a href="#" class="text-primary text-decoration-none" onclick="showPage('notifications')">عرض الكل</a>
+                        </div>
+                        <div class="card-body-custom">
+                            <div class="timeline" id="activityTimeline">
+                                <!-- ديناميكياً -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Tasks -->
+            <div class="content-card mt-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                <div class="card-header-custom">
+                    <h5><i class="fas fa-list ms-2"></i>المهام الأخيرة</h5>
+                    <a href="#" class="text-primary text-decoration-none" onclick="showPage('tasks')">عرض الكل</a>
+                </div>
+                <div class="card-body-custom p-0">
+                    <div class="table-responsive">
+                        <table class="table-custom" id="recentTasksTable">
+                            <thead>
+                            <tr>
+                                <th>المهمة</th>
+                                <th>الموظف</th>
+                                <th>التسليم</th>
+                                <th>التقدم</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                            </thead>
+                            <tbody id="recentTasksBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Tasks Page ==================== -->
+        <section id="tasks" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>📋 إدارة المهام</h2>
+                    <p>متابعة وتوزيع جميع المهام على الفريق</p>
+                </div>
+                <div class="d-flex gap-2">
+                    <button class="btn btn-outline-secondary" onclick="resetTaskFilters()">
+                        <i class="fas fa-redo-alt ms-2"></i>إعادة تعيين
+                    </button>
+                    <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addTaskModal">
+                        <i class="fas fa-plus"></i>
+                        مهمة جديدة
+                    </button>
+                </div>
+            </div>
+
+            <!-- Task Filters -->
+            <div class="content-card mb-4">
+                <div class="card-body-custom">
+                    <div class="row g-3">
+                        <div class="col-md-3">
+                            <input type="text" class="form-control" placeholder="🔍 بحث عن مهمة..." id="taskSearch" onkeyup="filterTasks()">
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="filterStatus" onchange="filterTasks()">
+                                <option value="">جميع الحالات</option>
+                                <option value="pending">قيد الانتظار</option>
+                                <option value="progress">جاري العمل</option>
+                                <option value="completed">مكتملة</option>
+                                <option value="overdue">متأخرة</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="filterAssignee" onchange="filterTasks()">
+                                <option value="">جميع الموظفين</option>
+                            </select>
+                        </div>
+                        <div class="col-md-2">
+                            <select class="form-select" id="filterPriority" onchange="filterTasks()">
+                                <option value="">جميع الأولويات</option>
+                                <option value="عالية">عالية</option>
+                                <option value="متوسطة">متوسطة</option>
+                                <option value="منخفضة">منخفضة</option>
+                            </select>
+                        </div>
+                        <div class="col-md-3">
+                            <input type="date" class="form-control" id="filterDeadline" onchange="filterTasks()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tasks Table -->
+            <div class="content-card">
+                <div class="card-body-custom p-0">
+                    <div class="table-responsive">
+                        <table class="table-custom">
+                            <thead>
+                            <tr>
+                                <th style="width: 30px;"><input type="checkbox" class="form-check-input" id="selectAll" onclick="toggleSelectAll()"></th>
+                                <th>المهمة</th>
+                                <th>الموظف</th>
+                                <th>الأولوية</th>
+                                <th>التسليم</th>
+                                <th>التقدم</th>
+                                <th>الحالة</th>
+                                <th>الإجراءات</th>
+                            </tr>
+                            </thead>
+                            <tbody id="allTasksBody">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Employees Page ==================== -->
+        <section id="employees" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>👥 فريق العمل</h2>
+                    <p>إدارة ومتابعة جميع الموظفين والمتدربين</p>
+                </div>
+                <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addEmployeeModal">
+                    <i class="fas fa-user-plus"></i>
+                    إضافة موظف
+                </button>
+            </div>
+
+            <!-- Employee Stats -->
+            <div class="stats-grid mb-4" id="employeeStatsGrid">
+                <!-- ديناميكياً -->
+            </div>
+
+            <!-- Employee Cards -->
+            <div class="row g-4" id="employeesGrid">
+            </div>
+        </section>
+
+        <!-- ==================== Projects Page ==================== -->
+        <section id="projects" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>📁 المشاريع</h2>
+                    <p>متابعة جميع المشاريع الجارية</p>
+                </div>
+                <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#addProjectModal">
+                    <i class="fas fa-plus"></i>
+                    مشروع جديد
+                </button>
+            </div>
+
+            <div class="row g-4" id="projectsGrid">
+            </div>
+        </section>
+
+        <!-- ==================== Files Page ==================== -->
+        <section id="files" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>📂 الملفات والمستندات</h2>
+                    <p>تخزين وتنظيم جميع ملفات المشروع</p>
+                </div>
+                <button class="btn-primary-custom" data-bs-toggle="modal" data-bs-target="#uploadFileModal">
+                    <i class="fas fa-upload"></i>
+                    رفع ملف
+                </button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-body-custom">
+                    <div class="row g-4" id="filesGrid">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Reports Page ==================== -->
+        <section id="reports" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>📊 التقارير والتحليلات</h2>
+                    <p>تقارير مفصلة عن أداء الفريق والمشاريع</p>
+                </div>
+                <button class="btn-primary-custom" onclick="exportReport()">
+                    <i class="fas fa-download"></i>
+                    تصدير تقرير
+                </button>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h5>توزيع المهام حسب الحالة</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <canvas id="taskStatusChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="content-card">
+                        <div class="card-header-custom">
+                            <h5>أداء الموظفين</h5>
+                        </div>
+                        <div class="card-body-custom">
+                            <canvas id="employeePerformanceChart" height="200"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Calendar Page ==================== -->
+        <section id="calendar" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>📅 التقويم</h2>
+                    <p>مواعيد التسليم والاجتماعات المهمة</p>
+                </div>
+            </div>
+            <div class="content-card">
+                <div class="card-body-custom">
+                    <div id="calendarContainer"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Settings Page ==================== -->
+        <section id="settings" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>⚙️ إعدادات النظام</h2>
+                    <p>تخصيص إعدادات النظام حسب احتياجاتك</p>
+                </div>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <div class="content-card">
+                        <div class="card-body-custom">
+                            <div class="nav flex-column nav-pills">
+                                <a class="nav-link active" href="#" onclick="showSettingsTab('profile')"><i class="fas fa-user ms-2"></i>الملف الشخصي</a>
+                                <a class="nav-link" href="#" onclick="showSettingsTab('language')"><i class="fas fa-language ms-2"></i>اللغة</a>
+                                <a class="nav-link" href="#" onclick="showSettingsTab('notifications')"><i class="fas fa-bell ms-2"></i>الإشعارات</a>
+                                <a class="nav-link" href="#" onclick="showSettingsTab('security')"><i class="fas fa-shield-alt ms-2"></i>الأمان</a>
+                                <a class="nav-link" href="#" onclick="showSettingsTab('appearance')"><i class="fas fa-palette ms-2"></i>المظهر</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-8">
+                    <div class="content-card" id="settingsContent">
+                        <!-- dynamic settings content -->
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== Notifications Page ==================== -->
+        <section id="notifications" class="page-section">
+            <div class="page-header">
+                <div class="page-title">
+                    <h2>🔔 الإشعارات</h2>
+                    <p>جميع الإشعارات والتنبيهات المهمة</p>
+                </div>
+                <button class="btn btn-outline-secondary" onclick="markAllNotificationsRead()">
+                    <i class="fas fa-check-double ms-2"></i>تحديد الكل كمقروء
+                </button>
+            </div>
+
+            <div class="content-card">
+                <div class="card-body-custom">
+                    <div class="timeline" id="notificationsList">
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+</main>
+
+<!-- ==================== Modals ==================== -->
+
+<!-- Add Task Modal -->
+<div class="modal fade" id="addTaskModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-plus-circle ms-2"></i>إضافة مهمة جديدة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addTaskForm">
+                    <div class="row g-3">
+                        <div class="col-12">
+                            <label class="form-label">عنوان المهمة *</label>
+                            <input type="text" class="form-control" id="taskTitle" placeholder="أدخل عنوان المهمة" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الموظف المسؤول *</label>
+                            <select class="form-select" id="taskAssignee" required>
+                                <option value="">اختر الموظف</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">المشروع</label>
+                            <select class="form-select" id="taskProject">
+                                <option value="">اختر المشروع</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">تاريخ التسليم *</label>
+                            <input type="date" class="form-control" id="taskDeadline" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label">الأولوية *</label>
+                            <select class="form-select" id="taskPriority" required>
+                                <option value="عالية">🔴 عالية</option>
+                                <option value="متوسطة" selected>🟡 متوسطة</option>
+                                <option value="منخفضة">🟢 منخفضة</option>
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">وصف المهمة</label>
+                            <textarea class="form-control" id="taskDescription" rows="4" placeholder="اكتب وصف تفصيلي للمهمة..."></textarea>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label">إرفاق ملفات</label>
+                            <input type="file" class="form-control" id="taskFiles" multiple>
+                            <small class="text-muted">سيتم تخزين أسماء الملفات فقط.</small>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn-primary-custom" onclick="saveTask()">
+                    <i class="fas fa-save"></i>
+                    حفظ المهمة
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Task Details Modal -->
+<div class="modal fade" id="taskDetailsModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-tasks ms-2"></i>تفاصيل المهمة</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <h4 id="detailTitle" class="mb-3 text-primary"></h4>
+                        <p id="detailDescription" class="text-muted mb-4"></p>
+
+                        <h6 class="mb-3"><i class="fas fa-comment-alt ms-2"></i>الملاحظات والتعليقات</h6>
+                        <div class="card bg-light mb-3">
+                            <div class="card-body">
+                                <textarea class="form-control border-0 bg-transparent" id="detailNotes" rows="3" placeholder="أضف ملاحظة..." onchange="updateTaskNotes()"></textarea>
+                            </div>
+                        </div>
+
+                        <h6 class="mb-3"><i class="fas fa-paperclip ms-2"></i>الملفات المرفقة</h6>
+                        <div class="d-flex gap-2 flex-wrap" id="detailFiles">
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="card bg-light">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <small class="text-muted">الموظف المسؤول</small>
+                                    <p class="mb-0 fw-bold" id="detailAssignee"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">تاريخ التسليم</small>
+                                    <p class="mb-0 fw-bold" id="detailDeadline"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">الأولوية</small>
+                                    <p class="mb-0" id="detailPriority"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <small class="text-muted">نسبة الإنجاز</small>
+                                    <div class="d-flex align-items-center gap-2">
+                                        <input type="number" class="form-control form-control-sm" id="detailProgressInput" min="0" max="100" value="0" onchange="updateTaskProgress()">
+                                        <span>%</span>
+                                    </div>
+                                </div>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-success btn-sm" onclick="markTaskCompleted()">
+                                        <i class="fas fa-check"></i> إكمال المهمة
+                                    </button>
+                                    <button class="btn btn-danger btn-sm" onclick="deleteTask(currentTaskId)">
+                                        <i class="fas fa-trash"></i> حذف المهمة
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Employee Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-user-plus ms-2"></i>إضافة موظف جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addEmployeeForm">
+                    <div class="mb-3">
+                        <label class="form-label">الاسم الكامل *</label>
+                        <input type="text" class="form-control" id="employeeName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">البريد الإلكتروني *</label>
+                        <input type="email" class="form-control" id="employeeEmail" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">المنصب</label>
+                        <select class="form-select" id="employeeRole">
+                            <option>مطور</option>
+                            <option>مصمم</option>
+                            <option>مدير مشروع</option>
+                            <option>متدرب</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">القسم</label>
+                        <select class="form-select" id="employeeDept">
+                            <option>التطوير</option>
+                            <option>التصميم</option>
+                            <option>التسويق</option>
+                            <option>الإدارة</option>
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn-primary-custom" onclick="saveEmployee()">
+                    <i class="fas fa-save"></i>
+                    حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Add Project Modal -->
+<div class="modal fade" id="addProjectModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-project-diagram ms-2"></i>إضافة مشروع جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="addProjectForm">
+                    <div class="mb-3">
+                        <label class="form-label">اسم المشروع *</label>
+                        <input type="text" class="form-control" id="projectName" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">وصف المشروع</label>
+                        <textarea class="form-control" id="projectDesc" rows="3"></textarea>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">تاريخ البدء</label>
+                        <input type="date" class="form-control" id="projectStart">
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">تاريخ الانتهاء</label>
+                        <input type="date" class="form-control" id="projectEnd">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn-primary-custom" onclick="saveProject()">
+                    <i class="fas fa-save"></i>
+                    حفظ
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Upload File Modal -->
+<div class="modal fade" id="uploadFileModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="fas fa-upload ms-2"></i>رفع ملف جديد</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <form id="uploadFileForm">
+                    <div class="mb-3">
+                        <label class="form-label">اختر ملف</label>
+                        <input type="file" class="form-control" id="newFile" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">الوصف (اختياري)</label>
+                        <input type="text" class="form-control" id="fileDesc" placeholder="وصف مختصر للملف">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">إلغاء</button>
+                <button type="button" class="btn-primary-custom" onclick="uploadFile()">
+                    <i class="fas fa-upload"></i>
+                    رفع
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ==================== JavaScript ==================== -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    // ==================== Data & Storage ====================
+    let tasks = [];
+    let employees = [];
+    let projects = [];
+    let files = [];
+    let notifications = [];
+    let currentTaskId = null;
+    let performanceChart, taskStatusChart, employeePerformanceChart;
+    let calendar = null;
+    let currentLanguage = 'ar'; // default Arabic
+
+    const STORAGE_KEYS = {
+        TASKS: 'taskpro_tasks',
+        EMPLOYEES: 'taskpro_employees',
+        PROJECTS: 'taskpro_projects',
+        FILES: 'taskpro_files',
+        NOTIFICATIONS: 'taskpro_notifications',
+        LANGUAGE: 'taskpro_language'
+    };
+
+    // Load data from localStorage
+    function loadData() {
+        tasks = JSON.parse(localStorage.getItem(STORAGE_KEYS.TASKS)) || [];
+        employees = JSON.parse(localStorage.getItem(STORAGE_KEYS.EMPLOYEES)) || [];
+        projects = JSON.parse(localStorage.getItem(STORAGE_KEYS.PROJECTS)) || [];
+        files = JSON.parse(localStorage.getItem(STORAGE_KEYS.FILES)) || [];
+        notifications = JSON.parse(localStorage.getItem(STORAGE_KEYS.NOTIFICATIONS)) || [];
+        currentLanguage = localStorage.getItem(STORAGE_KEYS.LANGUAGE) || 'ar';
+
+        // Default data if empty
+        if (employees.length === 0) {
+            employees = [
+                { id: 1, name: "أحمد محمد", role: "مطور واجهات", department: "التطوير", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=أحمد+محمد&background=4361ee&color=fff" },
+                { id: 2, name: "سارة علي", role: "مصممة جرافيك", department: "التصميم", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=سارة+علي&background=f72585&color=fff" },
+                { id: 3, name: "خالد عمر", role: "مختبر جودة", department: "التطوير", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=خالد+عمر&background=4cc9f0&color=fff" },
+                { id: 4, name: "منى يوسف", role: "كاتبة محتوى", department: "التسويق", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=منى+يوسف&background=f8961e&color=fff" },
+                { id: 5, name: "محمد حسن", role: "مدير مشروع", department: "الإدارة", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=محمد+حسن&background=2a9d8f&color=fff" },
+                { id: 6, name: "ليلى أحمد", role: "متدربة", department: "التصميم", tasks: 0, completed: 0, avatar: "https://ui-avatars.com/api/?name=ليلى+أحمد&background=e76f51&color=fff" }
+            ];
+            saveEmployees();
+        }
+
+        if (tasks.length === 0) {
+            tasks = [
+                { id: 1, title: "تصميم واجهة المستخدم", assignee: "سارة علي", assigneeId: 2, project: "تطوير الموقع", deadline: "2024-01-15", priority: "عالية", status: "progress", progress: 75, description: "تصميم جميع صفحات الموقع الرئيسية", notes: "", files: [], createdAt: new Date().toISOString() },
+                { id: 2, title: "برمجة لوحة التحكم", assignee: "أحمد محمد", assigneeId: 1, project: "تطوير الموقع", deadline: "2024-01-20", priority: "عالية", status: "progress", progress: 60, description: "تطوير لوحة تحكم الإدارة", notes: "", files: [], createdAt: new Date().toISOString() },
+                { id: 3, title: "كتابة محتوى الموقع", assignee: "منى يوسف", assigneeId: 4, project: "تطوير الموقع", deadline: "2024-01-10", priority: "متوسطة", status: "completed", progress: 100, description: "كتابة المحتوى التعريفي", notes: "", files: [], createdAt: new Date().toISOString() },
+                { id: 4, title: "اختبار التطبيق", assignee: "خالد عمر", assigneeId: 3, project: "تطبيق الجوال", deadline: "2024-01-25", priority: "عالية", status: "pending", progress: 0, description: "اختبار جميع وظائف التطبيق", notes: "", files: [], createdAt: new Date().toISOString() }
+            ];
+            saveTasks();
+        }
+
+        if (projects.length === 0) {
+            projects = [
+                { id: 1, name: "تطوير الموقع", description: "تطوير موقع الشركة", start: "2024-01-01", end: "2024-02-15", color: "primary" },
+                { id: 2, name: "تطبيق الجوال", description: "تطبيق جوال للمتجر", start: "2024-01-10", end: "2024-03-20", color: "success" }
+            ];
+            saveProjects();
+        }
+
+        if (files.length === 0) {
+            files = [
+                { id: 1, name: "تصميم_الواجهة.fig", type: "figma", size: "2.5 MB", date: "2024-01-10", uploadedBy: "سارة علي" },
+                { id: 2, name: "قاعدة_البيانات.sql", type: "database", size: "1.2 MB", date: "2024-01-09", uploadedBy: "أحمد محمد" }
+            ];
+            saveFiles();
+        }
+
+        if (notifications.length === 0) {
+            notifications = [
+                { id: 1, type: "success", title: "أكملت سارة مهمة جديدة", time: new Date(Date.now() - 5*60000).toISOString(), read: false },
+                { id: 2, type: "warning", title: "مهمة متأخرة عن موعدها", time: new Date(Date.now() - 3600000).toISOString(), read: false }
+            ];
+            saveNotifications();
+        }
+
+        // Apply language
+        applyLanguage(currentLanguage);
+    }
+
+    function saveTasks() { localStorage.setItem(STORAGE_KEYS.TASKS, JSON.stringify(tasks)); }
+    function saveEmployees() { localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(employees)); }
+    function saveProjects() { localStorage.setItem(STORAGE_KEYS.PROJECTS, JSON.stringify(projects)); }
+    function saveFiles() { localStorage.setItem(STORAGE_KEYS.FILES, JSON.stringify(files)); }
+    function saveNotifications() { localStorage.setItem(STORAGE_KEYS.NOTIFICATIONS, JSON.stringify(notifications)); }
+
+    // Language functions
+    function applyLanguage(lang) {
+        currentLanguage = lang;
+        localStorage.setItem(STORAGE_KEYS.LANGUAGE, lang);
+
+        const html = document.documentElement;
+        const body = document.body;
+        const bootstrapCss = document.getElementById('bootstrap-css');
+
+        if (lang === 'ar') {
+            html.setAttribute('dir', 'rtl');
+            html.setAttribute('lang', 'ar');
+            body.classList.remove('en');
+            bootstrapCss.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css';
+            // Change font
+            document.getElementById('font-css').href = 'https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800&display=swap';
+        } else {
+            html.setAttribute('dir', 'ltr');
+            html.setAttribute('lang', 'en');
+            body.classList.add('en');
+            bootstrapCss.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css';
+            // Change font
+            document.getElementById('font-css').href = 'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap';
+        }
+
+        // Update texts if needed
+        updateUILanguage(lang);
+    }
+
+    function updateUILanguage(lang) {
+        // This can be expanded to update all static texts
+        if (lang === 'en') {
+            document.querySelector('.sidebar-brand h4').innerHTML = 'Task<span>Pro</span>';
+            // More translations could be added here
+        } else {
+            document.querySelector('.sidebar-brand h4').innerHTML = 'تاسك<span>برو</span>';
+        }
+    }
+
+    // Helper functions
+    function generateId() { return Date.now() + Math.floor(Math.random() * 1000); }
+
+    function formatDate(dateStr) {
+        if (!dateStr) return '';
+        const d = new Date(dateStr);
+        return d.toLocaleDateString(currentLanguage === 'ar' ? 'ar-EG' : 'en-US');
+    }
+
+    function timeAgo(dateStr) {
+        const date = new Date(dateStr);
+        const now = new Date();
+        const seconds = Math.floor((now - date) / 1000);
+        if (seconds < 60) return currentLanguage === 'ar' ? 'منذ لحظات' : 'just now';
+        const minutes = Math.floor(seconds / 60);
+        if (minutes < 60) return currentLanguage === 'ar' ? `منذ ${minutes} دقيقة` : `${minutes} minutes ago`;
+        const hours = Math.floor(minutes / 60);
+        if (hours < 24) return currentLanguage === 'ar' ? `منذ ${hours} ساعة` : `${hours} hours ago`;
+        const days = Math.floor(hours / 24);
+        if (days < 7) return currentLanguage === 'ar' ? `منذ ${days} يوم` : `${days} days ago`;
+        return formatDate(dateStr);
+    }
+
+    // ==================== Page Navigation ====================
+    function showPage(pageId, element) {
+        document.querySelectorAll('.page-section').forEach(section => {
+            section.classList.remove('active');
+        });
+        document.getElementById(pageId).classList.add('active');
+
+        if (element) {
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+            });
+            element.classList.add('active');
+        } else {
+            // update sidebar based on pageId
+            document.querySelectorAll('.sidebar .nav-link').forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('onclick')?.includes(pageId)) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Close sidebar on mobile
+        if(window.innerWidth < 992) {
+            document.getElementById('sidebar').classList.remove('active');
+        }
+
+        // Refresh page data if needed
+        if (pageId === 'dashboard') renderDashboard();
+        else if (pageId === 'tasks') renderTasksPage();
+        else if (pageId === 'employees') renderEmployeesPage();
+        else if (pageId === 'projects') renderProjectsPage();
+        else if (pageId === 'files') renderFilesPage();
+        else if (pageId === 'reports') renderReportsPage();
+        else if (pageId === 'calendar') renderCalendarPage();
+        else if (pageId === 'notifications') renderNotificationsPage();
+        else if (pageId === 'settings') renderSettingsPage('profile');
+    }
+
+    function toggleSidebar() {
+        document.getElementById('sidebar').classList.toggle('active');
+    }
+
+    // ==================== Render Functions ====================
+    function getStatusBadge(status) {
+        const badges = {
+            'pending': { class: 'pending', text: currentLanguage === 'ar' ? 'قيد الانتظار' : 'Pending', icon: 'fa-clock' },
+            'progress': { class: 'progress', text: currentLanguage === 'ar' ? 'جاري العمل' : 'In Progress', icon: 'fa-spinner' },
+            'completed': { class: 'completed', text: currentLanguage === 'ar' ? 'مكتملة' : 'Completed', icon: 'fa-check-circle' },
+            'overdue': { class: 'overdue', text: currentLanguage === 'ar' ? 'متأخرة' : 'Overdue', icon: 'fa-exclamation-triangle' }
+        };
+        const badge = badges[status] || badges.pending;
+        return `<span class="status-badge ${badge.class}"><i class="fas ${badge.icon}"></i> ${badge.text}</span>`;
+    }
+
+    function getPriorityBadge(priority) {
+        const colors = {
+            'عالية': 'danger',
+            'متوسطة': 'warning',
+            'منخفضة': 'success'
+        };
+        const icons = {
+            'عالية': 'fa-arrow-up',
+            'متوسطة': 'fa-minus',
+            'منخفضة': 'fa-arrow-down'
+        };
+        const text = priority; // we keep it as is because it's stored in Arabic
+        return `<span class="badge bg-${colors[priority]}"><i class="fas ${icons[priority]}"></i> ${text}</span>`;
+    }
+
+    // Dashboard
+    function renderDashboard() {
+        updateStats();
+        renderRecentTasks();
+        renderActivityTimeline();
+        updatePerformanceChart();
+        updateDashboardSubtitle();
+    }
+
+    function updateStats() {
+        const total = tasks.length;
+        const completed = tasks.filter(t => t.status === 'completed').length;
+        const pending = tasks.filter(t => t.status === 'pending' || t.status === 'progress').length;
+        const overdue = tasks.filter(t => t.status === 'overdue').length;
+
+        const totalText = currentLanguage === 'ar' ? 'إجمالي المهام' : 'Total Tasks';
+        const completedText = currentLanguage === 'ar' ? 'المهام المكتملة' : 'Completed';
+        const pendingText = currentLanguage === 'ar' ? 'قيد التنفيذ' : 'In Progress';
+        const overdueText = currentLanguage === 'ar' ? 'متأخرة' : 'Overdue';
+
+        document.getElementById('statsGrid').innerHTML = `
+                <div class="stat-card primary">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${total}</h3>
+                            <p>${totalText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-clipboard-list"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${completed}</h3>
+                            <p>${completedText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-check-circle"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${pending}</h3>
+                            <p>${pendingText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-clock"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${overdue}</h3>
+                            <p>${overdueText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                    </div>
+                </div>
+            `;
+        document.getElementById('taskBadge').textContent = pending + overdue;
+    }
+
+    function renderRecentTasks() {
+        const recent = tasks.slice(0, 5);
+        const tbody = document.getElementById('recentTasksBody');
+        tbody.innerHTML = recent.map(t => `
+                <tr>
+                    <td><div class="fw-bold">${t.title}</div><small class="text-muted">${t.project || ''}</small></td>
+                    <td>${t.assignee}</td>
+                    <td>${t.deadline}</td>
+                    <td style="width: 15%;">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="progress-custom flex-grow-1">
+                                <div class="progress-bar bg-${t.progress === 100 ? 'success' : t.progress > 50 ? 'primary' : 'warning'}" style="width: ${t.progress}%"></div>
+                            </div>
+                            <span class="text-muted">${t.progress}%</span>
+                        </div>
+                    </td>
+                    <td>${getStatusBadge(t.status)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary" onclick="openTaskDetails(${t.id})"><i class="fas fa-eye"></i></button>
+                    </td>
+                </tr>
+            `).join('');
+    }
+
+    function renderActivityTimeline() {
+        const activities = [...notifications].sort((a,b) => new Date(b.time) - new Date(a.time)).slice(0, 5);
+        const timeline = document.getElementById('activityTimeline');
+        timeline.innerHTML = activities.map(a => `
+                <div class="timeline-item ${a.read ? 'completed' : ''}">
+                    <div class="timeline-content ${!a.read ? 'bg-white border' : ''}">
+                        <div class="d-flex justify-content-between">
+                            <h6><i class="fas ${a.type === 'success' ? 'fa-check-circle' : a.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} text-${a.type} ms-2"></i>${a.title}</h6>
+                            <small class="text-muted">${timeAgo(a.time)}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+    }
+
+    function updateDashboardSubtitle() {
+        const now = new Date();
+        const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        document.getElementById('dashboardSubtitle').textContent =
+            (currentLanguage === 'ar' ? 'اليوم: ' : 'Today: ') +
+            now.toLocaleDateString(currentLanguage === 'ar' ? 'ar-EG' : 'en-US', options);
+    }
+
+    // Tasks Page
+    function renderTasksPage() {
+        populateFilterAssignee();
+        filterTasks(); // will render table
+    }
+
+    function populateFilterAssignee() {
+        const select = document.getElementById('filterAssignee');
+        select.innerHTML = '<option value="">' + (currentLanguage === 'ar' ? 'جميع الموظفين' : 'All Employees') + '</option>';
+        employees.forEach(emp => {
+            select.innerHTML += `<option value="${emp.name}">${emp.name}</option>`;
+        });
+    }
+
+    function filterTasks() {
+        let filtered = [...tasks];
+        const search = document.getElementById('taskSearch').value.toLowerCase();
+        const status = document.getElementById('filterStatus').value;
+        const assignee = document.getElementById('filterAssignee').value;
+        const priority = document.getElementById('filterPriority').value;
+        const deadline = document.getElementById('filterDeadline').value;
+
+        if (search) filtered = filtered.filter(t => t.title.toLowerCase().includes(search) || (t.description && t.description.toLowerCase().includes(search)));
+        if (status) filtered = filtered.filter(t => t.status === status);
+        if (assignee) filtered = filtered.filter(t => t.assignee === assignee);
+        if (priority) filtered = filtered.filter(t => t.priority === priority);
+        if (deadline) filtered = filtered.filter(t => t.deadline === deadline);
+
+        renderAllTasksTable(filtered);
+    }
+
+    function resetTaskFilters() {
+        document.getElementById('taskSearch').value = '';
+        document.getElementById('filterStatus').value = '';
+        document.getElementById('filterAssignee').value = '';
+        document.getElementById('filterPriority').value = '';
+        document.getElementById('filterDeadline').value = '';
+        filterTasks();
+    }
+
+    function renderAllTasksTable(taskArray) {
+        const tbody = document.getElementById('allTasksBody');
+        tbody.innerHTML = taskArray.map(t => `
+                <tr data-id="${t.id}">
+                    <td><input type="checkbox" class="form-check-input task-select" value="${t.id}"></td>
+                    <td>
+                        <div class="fw-bold">${t.title}</div>
+                        <small class="text-muted">${t.project || ''}</small>
+                    </td>
+                    <td>${t.assignee}</td>
+                    <td>${getPriorityBadge(t.priority)}</td>
+                    <td>${t.deadline}</td>
+                    <td style="width: 15%;">
+                        <div class="d-flex align-items-center gap-2">
+                            <div class="progress-custom flex-grow-1">
+                                <div class="progress-bar bg-${t.progress === 100 ? 'success' : t.progress > 50 ? 'primary' : 'warning'}" style="width: ${t.progress}%"></div>
+                            </div>
+                            <span class="text-muted">${t.progress}%</span>
+                        </div>
+                    </td>
+                    <td>${getStatusBadge(t.status)}</td>
+                    <td>
+                        <div class="btn-group">
+                            <button class="btn btn-sm btn-outline-primary" onclick="openTaskDetails(${t.id})"><i class="fas fa-eye"></i></button>
+                            <button class="btn btn-sm btn-outline-danger" onclick="deleteTask(${t.id})"><i class="fas fa-trash"></i></button>
+                        </div>
+                    </td>
+                </tr>
+            `).join('') || '<tr><td colspan="8" class="text-center py-4">' + (currentLanguage === 'ar' ? 'لا توجد مهام تطابق المعايير' : 'No tasks match criteria') + '</td></tr>';
+    }
+
+    function toggleSelectAll() {
+        const selectAll = document.getElementById('selectAll');
+        const checkboxes = document.querySelectorAll('.task-select');
+        checkboxes.forEach(cb => cb.checked = selectAll.checked);
+    }
+
+    // Employees Page
+    function renderEmployeesPage() {
+        updateEmployeeStats();
+        renderEmployeeCards();
+    }
+
+    function updateEmployeeStats() {
+        const totalText = currentLanguage === 'ar' ? 'إجمالي الموظفين' : 'Total Employees';
+        const employeesCount = currentLanguage === 'ar' ? 'موظفين' : 'Employees';
+        const traineesText = currentLanguage === 'ar' ? 'متدربين' : 'Trainees';
+        const activeText = currentLanguage === 'ar' ? 'في الخدمة' : 'Active';
+
+        document.getElementById('employeeStatsGrid').innerHTML = `
+                <div class="stat-card primary">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${employees.length}</h3>
+                            <p>${totalText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-users"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card success">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${employees.filter(e => e.role !== 'متدرب').length}</h3>
+                            <p>${employeesCount}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-user-check"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card warning">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${employees.filter(e => e.role === 'متدرب').length}</h3>
+                            <p>${traineesText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-user-graduate"></i></div>
+                    </div>
+                </div>
+                <div class="stat-card danger">
+                    <div class="stat-card-header">
+                        <div class="stat-card-body">
+                            <h3>${employees.length}</h3>
+                            <p>${activeText}</p>
+                        </div>
+                        <div class="stat-icon"><i class="fas fa-briefcase"></i></div>
+                    </div>
+                </div>
+            `;
+    }
+
+    function renderEmployeeCards() {
+        // Update each employee's task counts
+        employees.forEach(emp => {
+            emp.tasks = tasks.filter(t => t.assigneeId === emp.id).length;
+            emp.completed = tasks.filter(t => t.assigneeId === emp.id && t.status === 'completed').length;
+        });
+
+        const grid = document.getElementById('employeesGrid');
+        grid.innerHTML = employees.map(emp => `
+                <div class="col-lg-4 col-md-6">
+                    <div class="employee-card">
+                        <div class="employee-avatar">
+                            <img src="${emp.avatar}" alt="${emp.name}">
+                        </div>
+                        <h5>${emp.name}</h5>
+                        <p>${emp.role} • ${emp.department}</p>
+                        <div class="employee-stats">
+                            <div class="employee-stat">
+                                <h4>${emp.tasks}</h4>
+                                <span>${currentLanguage === 'ar' ? 'المهام' : 'Tasks'}</span>
+                            </div>
+                            <div class="employee-stat">
+                                <h4>${emp.completed}</h4>
+                                <span>${currentLanguage === 'ar' ? 'مكتملة' : 'Completed'}</span>
+                            </div>
+                            <div class="employee-stat">
+                                <h4>${emp.tasks ? Math.round((emp.completed/emp.tasks)*100) : 0}%</h4>
+                                <span>${currentLanguage === 'ar' ? 'الإنجاز' : 'Progress'}</span>
+                            </div>
+                        </div>
+                        <div class="mt-3 d-flex gap-2 justify-content-center">
+                            <button class="btn btn-sm btn-primary" onclick="showPage('tasks'); setTimeout(()=>{ document.getElementById('filterAssignee').value='${emp.name}'; filterTasks(); }, 100);"><i class="fas fa-tasks"></i> ${currentLanguage === 'ar' ? 'عرض المهام' : 'View Tasks'}</button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        saveEmployees();
+    }
+
+    // Projects Page
+    function renderProjectsPage() {
+        const grid = document.getElementById('projectsGrid');
+        grid.innerHTML = projects.map(proj => {
+            const projTasks = tasks.filter(t => t.project === proj.name);
+            const total = projTasks.length;
+            const completed = projTasks.filter(t => t.status === 'completed').length;
+            const progress = total ? Math.round((completed / total) * 100) : 0;
+            return `
+                <div class="col-lg-6 col-md-6">
+                    <div class="content-card">
+                        <div class="card-body-custom">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <div>
+                                    <h5 class="mb-1">${proj.name}</h5>
+                                    <small class="text-muted"><i class="fas fa-calendar me-1"></i> ${currentLanguage === 'ar' ? 'ينتهي' : 'Ends'} ${proj.end}</small>
+                                </div>
+                                <span class="badge bg-${proj.color}">${progress}%</span>
+                            </div>
+                            <div class="progress-custom mb-3">
+                                <div class="progress-bar bg-${proj.color}" style="width: ${progress}%"></div>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <div class="avatar-group">
+                                    ${employees.slice(0,3).map(emp => `<img src="${emp.avatar}" alt="${emp.name}">`).join('')}
+                                    ${employees.length > 3 ? `<span class="badge bg-secondary">+${employees.length-3}</span>` : ''}
+                                </div>
+                                <div>
+                                    <small class="text-muted">${completed}/${total} ${currentLanguage === 'ar' ? 'مهام' : 'tasks'}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+    }
+
+    // Files Page
+    function renderFilesPage() {
+        const grid = document.getElementById('filesGrid');
+        const icons = {
+            'figma': { icon: 'fa-pen-nib', color: 'danger' },
+            'database': { icon: 'fa-database', color: 'primary' },
+            'pdf': { icon: 'fa-file-pdf', color: 'danger' },
+            'image': { icon: 'fa-image', color: 'success' },
+            'word': { icon: 'fa-file-word', color: 'primary' },
+            'powerpoint': { icon: 'fa-file-powerpoint', color: 'warning' }
+        };
+
+        grid.innerHTML = files.map(file => `
+                <div class="col-lg-4 col-md-6">
+                    <div class="content-card">
+                        <div class="card-body-custom">
+                            <div class="d-flex align-items-center gap-3">
+                                <div class="icon-box bg-${icons[file.type]?.color || 'secondary'} text-white" style="width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="fas ${icons[file.type]?.icon || 'fa-file'}"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-1">${file.name}</h6>
+                                    <small class="text-muted">${file.size} • ${file.date}</small>
+                                </div>
+                                <button class="btn btn-sm btn-outline-secondary" onclick="downloadFile(${file.id})">
+                                    <i class="fas fa-download"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+    }
+
+    // Reports Page
+    function renderReportsPage() {
+        if (taskStatusChart) taskStatusChart.destroy();
+        if (employeePerformanceChart) employeePerformanceChart.destroy();
+
+        const statusCtx = document.getElementById('taskStatusChart').getContext('2d');
+        const statusCounts = {
+            completed: tasks.filter(t => t.status === 'completed').length,
+            progress: tasks.filter(t => t.status === 'progress').length,
+            pending: tasks.filter(t => t.status === 'pending').length,
+            overdue: tasks.filter(t => t.status === 'overdue').length
+        };
+        const statusLabels = [
+            currentLanguage === 'ar' ? 'مكتملة' : 'Completed',
+            currentLanguage === 'ar' ? 'جاري العمل' : 'In Progress',
+            currentLanguage === 'ar' ? 'قيد الانتظار' : 'Pending',
+            currentLanguage === 'ar' ? 'متأخرة' : 'Overdue'
+        ];
+        taskStatusChart = new Chart(statusCtx, {
+            type: 'doughnut',
+            data: {
+                labels: statusLabels,
+                datasets: [{
+                    data: [statusCounts.completed, statusCounts.progress, statusCounts.pending, statusCounts.overdue],
+                    backgroundColor: ['#2ecc71', '#4361ee', '#f8961e', '#f72585'],
+                    borderWidth: 0
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { position: 'bottom', rtl: currentLanguage === 'ar' } } }
+        });
+
+        const empCtx = document.getElementById('employeePerformanceChart').getContext('2d');
+        employeePerformanceChart = new Chart(empCtx, {
+            type: 'bar',
+            data: {
+                labels: employees.map(e => e.name),
+                datasets: [{
+                    label: currentLanguage === 'ar' ? 'المهام المكتملة' : 'Completed Tasks',
+                    data: employees.map(e => e.completed || 0),
+                    backgroundColor: '#4361ee',
+                    borderRadius: 8
+                }]
+            },
+            options: { responsive: true, plugins: { legend: { display: false } } }
+        });
+    }
+
+    // Calendar Page
+    function renderCalendarPage() {
+        const calendarEl = document.getElementById('calendarContainer');
+        if (calendar) calendar.destroy();
+
+        const events = tasks.map(task => ({
+            id: task.id,
+            title: task.title,
+            start: task.deadline,
+            description: task.description,
+            backgroundColor: task.status === 'completed' ? '#2ecc71' : task.status === 'overdue' ? '#f72585' : '#4361ee',
+            borderColor: 'transparent',
+            extendedProps: { task }
+        }));
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            locale: currentLanguage === 'ar' ? 'ar' : 'en',
+            events: events,
+            eventClick: function(info) {
+                openTaskDetails(info.event.id);
+            }
+        });
+        calendar.render();
+    }
+
+    // Notifications Page
+    function renderNotificationsPage() {
+        const list = document.getElementById('notificationsList');
+        list.innerHTML = notifications.map(n => `
+                <div class="timeline-item ${n.read ? 'completed' : ''}" onclick="markNotificationRead(${n.id})">
+                    <div class="timeline-content ${!n.read ? 'bg-white border cursor-pointer' : ''}">
+                        <div class="d-flex justify-content-between">
+                            <h6><i class="fas ${n.type === 'success' ? 'fa-check-circle' : n.type === 'warning' ? 'fa-exclamation-triangle' : 'fa-info-circle'} text-${n.type} ms-2"></i>${n.title}</h6>
+                            <small class="text-muted">${timeAgo(n.time)}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('') || '<p class="text-muted text-center">' + (currentLanguage === 'ar' ? 'لا توجد إشعارات' : 'No notifications') + '</p>';
+        updateNotificationBadge();
+    }
+
+    function updateNotificationBadge() {
+        const unread = notifications.filter(n => !n.read).length;
+        document.getElementById('notificationBadge').textContent = unread;
+        document.getElementById('notificationDot').style.display = unread ? 'block' : 'none';
+    }
+
+    function markNotificationRead(id) {
+        const notif = notifications.find(n => n.id === id);
+        if (notif) notif.read = true;
+        saveNotifications();
+        renderNotificationsPage();
+    }
+
+    function markAllNotificationsRead() {
+        notifications.forEach(n => n.read = true);
+        saveNotifications();
+        renderNotificationsPage();
+    }
+
+    // Settings Page
+    function renderSettingsPage(tab) {
+        const content = document.getElementById('settingsContent');
+        if (tab === 'profile') {
+            content.innerHTML = `
+                    <div class="card-header-custom"><h5>${currentLanguage === 'ar' ? 'الملف الشخصي' : 'Profile'}</h5></div>
+                    <div class="card-body-custom">
+                        <form>
+                            <div class="row g-3">
+                                <div class="col-md-6"><label class="form-label">${currentLanguage === 'ar' ? 'الاسم الأول' : 'First Name'}</label><input type="text" class="form-control" value="أحمد"></div>
+                                <div class="col-md-6"><label class="form-label">${currentLanguage === 'ar' ? 'الاسم الأخير' : 'Last Name'}</label><input type="text" class="form-control" value="المدير"></div>
+                                <div class="col-md-6"><label class="form-label">${currentLanguage === 'ar' ? 'البريد الإلكتروني' : 'Email'}</label><input type="email" class="form-control" value="admin@taskpro.com"></div>
+                                <div class="col-md-6"><label class="form-label">${currentLanguage === 'ar' ? 'رقم الهاتف' : 'Phone'}</label><input type="tel" class="form-control" value="+966 50 000 0000"></div>
+                                <div class="col-12"><label class="form-label">${currentLanguage === 'ar' ? 'نبذة تعريفية' : 'Bio'}</label><textarea class="form-control" rows="3">${currentLanguage === 'ar' ? 'مدير النظام المسؤول عن متابعة جميع المهام والموظفين.' : 'System administrator responsible for managing tasks and employees.'}</textarea></div>
+                                <div class="col-12"><button class="btn-primary-custom"><i class="fas fa-save"></i> ${currentLanguage === 'ar' ? 'حفظ التغييرات' : 'Save Changes'}</button></div>
+                            </div>
+                        </form>
+                    </div>
+                `;
+        } else if (tab === 'language') {
+            content.innerHTML = `
+                    <div class="card-header-custom"><h5>${currentLanguage === 'ar' ? 'إعدادات اللغة' : 'Language Settings'}</h5></div>
+                    <div class="card-body-custom">
+                        <div class="mb-3">
+                            <label class="form-label">${currentLanguage === 'ar' ? 'اختر اللغة' : 'Choose Language'}</label>
+                            <select class="form-select" id="languageSelect" onchange="changeLanguage(this.value)">
+                                <option value="ar" ${currentLanguage === 'ar' ? 'selected' : ''}>العربية (RTL)</option>
+                                <option value="en" ${currentLanguage === 'en' ? 'selected' : ''}>English (LTR)</option>
+                            </select>
+                        </div>
+                        <p class="text-muted">${currentLanguage === 'ar' ? 'سيتم تغيير اتجاه الصفحة والخطوط تلقائياً.' : 'Page direction and fonts will change automatically.'}</p>
+                    </div>
+                `;
+        } else {
+            content.innerHTML = `<div class="card-body-custom"><p class="text-muted">${currentLanguage === 'ar' ? 'قيد التطوير' : 'Under development'}</p></div>`;
+        }
+    }
+
+    function showSettingsTab(tab) {
+        renderSettingsPage(tab);
+    }
+
+    function changeLanguage(lang) {
+        applyLanguage(lang);
+        // Re-render pages to update texts
+        if (document.getElementById('dashboard').classList.contains('active')) renderDashboard();
+        else if (document.getElementById('tasks').classList.contains('active')) renderTasksPage();
+        else if (document.getElementById('employees').classList.contains('active')) renderEmployeesPage();
+        else if (document.getElementById('projects').classList.contains('active')) renderProjectsPage();
+        else if (document.getElementById('reports').classList.contains('active')) renderReportsPage();
+        else if (document.getElementById('calendar').classList.contains('active')) renderCalendarPage();
+        else if (document.getElementById('settings').classList.contains('active')) renderSettingsPage('language');
+        else if (document.getElementById('notifications').classList.contains('active')) renderNotificationsPage();
+    }
+
+    // ==================== Task Operations ====================
+    function openTaskDetails(taskId) {
+        const task = tasks.find(t => t.id === taskId);
+        if (!task) return;
+        currentTaskId = taskId;
+        document.getElementById('detailTitle').textContent = task.title;
+        document.getElementById('detailDescription').textContent = task.description || (currentLanguage === 'ar' ? 'لا يوجد وصف' : 'No description');
+        document.getElementById('detailAssignee').textContent = task.assignee;
+        document.getElementById('detailDeadline').textContent = task.deadline;
+        document.getElementById('detailPriority').innerHTML = getPriorityBadge(task.priority);
+        document.getElementById('detailNotes').value = task.notes || '';
+        document.getElementById('detailProgressInput').value = task.progress;
+        const filesDiv = document.getElementById('detailFiles');
+        filesDiv.innerHTML = task.files && task.files.length ? task.files.map(f => `<span class="file-badge"><i class="fas fa-paperclip"></i> ${f}</span>`).join(' ') : '<span class="text-muted">' + (currentLanguage === 'ar' ? 'لا توجد ملفات مرفقة' : 'No attached files') + '</span>';
+        new bootstrap.Modal(document.getElementById('taskDetailsModal')).show();
+    }
+
+    function updateTaskNotes() {
+        const task = tasks.find(t => t.id === currentTaskId);
+        if (task) {
+            task.notes = document.getElementById('detailNotes').value;
+            saveTasks();
+            showToast(currentLanguage === 'ar' ? 'تم حفظ الملاحظة' : 'Note saved', 'success');
+        }
+    }
+
+    function updateTaskProgress() {
+        const task = tasks.find(t => t.id === currentTaskId);
+        if (task) {
+            const newProgress = parseInt(document.getElementById('detailProgressInput').value);
+            if (!isNaN(newProgress) && newProgress >= 0 && newProgress <= 100) {
+                task.progress = newProgress;
+                if (newProgress === 100) task.status = 'completed';
+                else if (task.status === 'completed' && newProgress < 100) task.status = 'progress';
+                saveTasks();
+                renderDashboard();
+                filterTasks();
+                showToast(currentLanguage === 'ar' ? 'تم تحديث التقدم' : 'Progress updated', 'success');
+            }
+        }
+    }
+
+    function markTaskCompleted() {
+        const task = tasks.find(t => t.id === currentTaskId);
+        if (task) {
+            task.progress = 100;
+            task.status = 'completed';
+            saveTasks();
+            addNotification('success', (currentLanguage === 'ar' ? `أكمل ${task.assignee} مهمة "${task.title}"` : `${task.assignee} completed task "${task.title}"`));
+            bootstrap.Modal.getInstance(document.getElementById('taskDetailsModal')).hide();
+            renderDashboard();
+            filterTasks();
+        }
+    }
+
+    function deleteTask(taskId) {
+        if (confirm(currentLanguage === 'ar' ? 'هل أنت متأكد من حذف هذه المهمة؟' : 'Are you sure you want to delete this task?')) {
+            tasks = tasks.filter(t => t.id !== taskId);
+            saveTasks();
+            bootstrap.Modal.getInstance(document.getElementById('taskDetailsModal'))?.hide();
+            renderDashboard();
+            filterTasks();
+            showToast(currentLanguage === 'ar' ? 'تم حذف المهمة' : 'Task deleted', 'success');
+        }
+    }
+
+    function saveTask() {
+        const title = document.getElementById('taskTitle').value.trim();
+        const assigneeName = document.getElementById('taskAssignee').value;
+        const assigneeId = employees.find(e => e.name === assigneeName)?.id;
+        const project = document.getElementById('taskProject').value;
+        const deadline = document.getElementById('taskDeadline').value;
+        const priority = document.getElementById('taskPriority').value;
+        const description = document.getElementById('taskDescription').value.trim();
+        const filesInput = document.getElementById('taskFiles');
+        const fileNames = filesInput.files.length ? Array.from(filesInput.files).map(f => f.name) : [];
+
+        if (!title || !assigneeName || !deadline) {
+            showToast(currentLanguage === 'ar' ? 'يرجى تعبئة جميع الحقول المطلوبة' : 'Please fill all required fields', 'warning');
+            return;
+        }
+
+        const newTask = {
+            id: generateId(),
+            title,
+            assignee: assigneeName,
+            assigneeId,
+            project,
+            deadline,
+            priority,
+            description,
+            status: 'pending',
+            progress: 0,
+            notes: '',
+            files: fileNames,
+            createdAt: new Date().toISOString()
+        };
+        tasks.push(newTask);
+        saveTasks();
+        addNotification('info', (currentLanguage === 'ar' ? `تم إضافة مهمة جديدة: "${title}"` : `New task added: "${title}"`));
+
+        bootstrap.Modal.getInstance(document.getElementById('addTaskModal')).hide();
+        document.getElementById('addTaskForm').reset();
+        renderDashboard();
+        filterTasks();
+        showToast(currentLanguage === 'ar' ? 'تم إضافة المهمة بنجاح' : 'Task added successfully', 'success');
+    }
+
+    // ==================== Employee Operations ====================
+    function saveEmployee() {
+        const name = document.getElementById('employeeName').value.trim();
+        const email = document.getElementById('employeeEmail').value.trim();
+        const role = document.getElementById('employeeRole').value;
+        const dept = document.getElementById('employeeDept').value;
+        if (!name || !email) {
+            showToast(currentLanguage === 'ar' ? 'الاسم والبريد الإلكتروني مطلوبان' : 'Name and email are required', 'warning');
+            return;
+        }
+        const newEmp = {
+            id: generateId(),
+            name,
+            email,
+            role,
+            department: dept,
+            tasks: 0,
+            completed: 0,
+            avatar: `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=random&color=fff`
+        };
+        employees.push(newEmp);
+        saveEmployees();
+        bootstrap.Modal.getInstance(document.getElementById('addEmployeeModal')).hide();
+        document.getElementById('addEmployeeForm').reset();
+        renderEmployeesPage();
+        showToast(currentLanguage === 'ar' ? 'تم إضافة الموظف' : 'Employee added', 'success');
+    }
+
+    // ==================== Project Operations ====================
+    function saveProject() {
+        const name = document.getElementById('projectName').value.trim();
+        const desc = document.getElementById('projectDesc').value.trim();
+        const start = document.getElementById('projectStart').value;
+        const end = document.getElementById('projectEnd').value;
+        if (!name) {
+            showToast(currentLanguage === 'ar' ? 'اسم المشروع مطلوب' : 'Project name is required', 'warning');
+            return;
+        }
+        const colors = ['primary', 'success', 'warning', 'info', 'danger'];
+        const newProj = {
+            id: generateId(),
+            name,
+            description: desc,
+            start,
+            end,
+            color: colors[Math.floor(Math.random() * colors.length)]
+        };
+        projects.push(newProj);
+        saveProjects();
+        bootstrap.Modal.getInstance(document.getElementById('addProjectModal')).hide();
+        document.getElementById('addProjectForm').reset();
+        renderProjectsPage();
+        showToast(currentLanguage === 'ar' ? 'تم إضافة المشروع' : 'Project added', 'success');
+    }
+
+    // ==================== File Operations ====================
+    function uploadFile() {
+        const fileInput = document.getElementById('newFile');
+        const desc = document.getElementById('fileDesc').value.trim();
+        if (!fileInput.files.length) {
+            showToast(currentLanguage === 'ar' ? 'اختر ملفاً أولاً' : 'Select a file first', 'warning');
+            return;
+        }
+        const file = fileInput.files[0];
+        const ext = file.name.split('.').pop();
+        const typeMap = {
+            'fig': 'figma', 'sql': 'database', 'pdf': 'pdf', 'png': 'image', 'jpg': 'image',
+            'jpeg': 'image', 'docx': 'word', 'pptx': 'powerpoint'
+        };
+        const fileType = typeMap[ext] || 'other';
+        const newFile = {
+            id: generateId(),
+            name: file.name,
+            type: fileType,
+            size: (file.size / 1024).toFixed(1) + ' KB',
+            date: new Date().toISOString().split('T')[0],
+            uploadedBy: 'أحمد المدير',
+            description: desc
+        };
+        files.push(newFile);
+        saveFiles();
+        bootstrap.Modal.getInstance(document.getElementById('uploadFileModal')).hide();
+        document.getElementById('uploadFileForm').reset();
+        renderFilesPage();
+        showToast(currentLanguage === 'ar' ? 'تم رفع الملف' : 'File uploaded', 'success');
+    }
+
+    function downloadFile(fileId) {
+        showToast(currentLanguage === 'ar' ? 'تم تحميل الملف (محاكاة)' : 'File download (simulated)', 'info');
+    }
+
+    // ==================== Charts ====================
+    function updatePerformanceChart() {
+        const period = document.getElementById('chartPeriod').value;
+        let labels, data1, data2;
+        if (period === 'week') {
+            labels = currentLanguage === 'ar' ? ['السبت', 'الأحد', 'الاثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة'] : ['Sat', 'Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri'];
+            data1 = [5, 8, 6, 9, 7, 10, 8];
+            data2 = [3, 5, 4, 6, 5, 7, 6];
+        } else if (period === 'month') {
+            labels = currentLanguage === 'ar' ? ['الأسبوع 1', 'الأسبوع 2', 'الأسبوع 3', 'الأسبوع 4'] : ['Week 1', 'Week 2', 'Week 3', 'Week 4'];
+            data1 = [20, 25, 18, 22];
+            data2 = [15, 20, 16, 18];
+        } else {
+            labels = currentLanguage === 'ar' ? ['يناير', 'فبراير', 'مارس', 'أبريل', 'مايو', 'يونيو'] : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'];
+            data1 = [45, 52, 38, 45, 50, 42];
+            data2 = [30, 35, 28, 32, 38, 35];
+        }
+
+        if (performanceChart) performanceChart.destroy();
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        performanceChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: labels,
+                datasets: [
+                    { label: currentLanguage === 'ar' ? 'المهام المكتملة' : 'Completed', data: data1, borderColor: '#4361ee', backgroundColor: 'rgba(67, 97, 238, 0.1)', fill: true, tension: 0.4 },
+                    { label: currentLanguage === 'ar' ? 'المهام الجديدة' : 'New Tasks', data: data2, borderColor: '#4cc9f0', backgroundColor: 'rgba(76, 201, 240, 0.1)', fill: true, tension: 0.4 }
+                ]
+            },
+            options: {
+                responsive: true,
+                plugins: { legend: { position: 'top', rtl: currentLanguage === 'ar' } }
+            }
+        });
+    }
+
+    // ==================== Global Search ====================
+    function globalSearch() {
+        const query = document.getElementById('globalSearch').value.toLowerCase();
+        if (!query) return;
+        const foundTasks = tasks.filter(t => t.title.toLowerCase().includes(query) || (t.description && t.description.toLowerCase().includes(query)));
+        const foundEmps = employees.filter(e => e.name.toLowerCase().includes(query));
+        if (foundTasks.length || foundEmps.length) {
+            let msg = currentLanguage === 'ar' ? `تم العثور على ${foundTasks.length} مهمة و ${foundEmps.length} موظف` : `Found ${foundTasks.length} tasks and ${foundEmps.length} employees`;
+            showToast(msg, 'info');
+        } else {
+            showToast(currentLanguage === 'ar' ? 'لا توجد نتائج' : 'No results found', 'warning');
+        }
+    }
+
+    // ==================== Notification Helpers ====================
+    function addNotification(type, title) {
+        const newNotif = {
+            id: generateId(),
+            type,
+            title,
+            time: new Date().toISOString(),
+            read: false
+        };
+        notifications.unshift(newNotif);
+        if (notifications.length > 50) notifications.pop();
+        saveNotifications();
+        updateNotificationBadge();
+    }
+
+    function showToast(message, type = 'info') {
+        const toast = document.createElement('div');
+        toast.className = `position-fixed bottom-0 end-0 m-3 alert alert-${type} animate__animated animate__fadeInRight`;
+        toast.style.zIndex = '9999';
+        toast.innerHTML = `<i class="fas fa-${type === 'success' ? 'check-circle' : type === 'warning' ? 'exclamation-triangle' : 'info-circle'} ms-2"></i>${message}`;
+        document.body.appendChild(toast);
+        setTimeout(() => {
+            toast.classList.remove('animate__fadeInRight');
+            toast.classList.add('animate__fadeOutRight');
+            setTimeout(() => toast.remove(), 500);
+        }, 3000);
+    }
+
+    // ==================== Export ====================
+    function exportReport() {
+        const dataStr = JSON.stringify({ tasks, employees, projects, files, notifications }, null, 2);
+        const blob = new Blob([dataStr], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `taskpro_export_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showToast(currentLanguage === 'ar' ? 'تم تصدير التقرير' : 'Report exported', 'success');
+    }
+
+    // ==================== Initialize ====================
+    document.addEventListener('DOMContentLoaded', function() {
+        loadData();
+        renderDashboard();
+        populateFilterAssignee();
+        renderTasksPage();
+        renderEmployeesPage();
+        renderProjectsPage();
+        renderFilesPage();
+        renderReportsPage();
+        renderNotificationsPage();
+        updateNotificationBadge();
+
+        // Populate task assignee dropdown
+        const assigneeSelect = document.getElementById('taskAssignee');
+        employees.forEach(emp => {
+            assigneeSelect.innerHTML += `<option value="${emp.name}">${emp.name}</option>`;
+        });
+
+        // Populate project dropdown
+        const projectSelect = document.getElementById('taskProject');
+        projects.forEach(proj => {
+            projectSelect.innerHTML += `<option value="${proj.name}">${proj.name}</option>`;
+        });
+    });
+</script>
+</body>
+</html>
